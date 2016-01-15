@@ -1,0 +1,23 @@
+//---------------------------
+//
+// Text-align helpers
+//
+//---------------------------
+
+/* uncss:ignore */
+.textalign--left,
+%textalign--left {
+	text-align: left;
+}
+
+/* uncss:ignore */
+.textalign--right,
+%textalign--right {
+	text-align: right;
+}
+
+/* uncss:ignore */
+.textalign--center,
+%textalign--center {
+	text-align: center;
+}

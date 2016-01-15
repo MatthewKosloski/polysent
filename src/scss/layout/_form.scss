@@ -1,0 +1,50 @@
+.submit-poll {
+	fieldset {
+		margin: 0;
+		padding: 0;
+		border: none;
+		margin-bottom: 20px;
+	}
+	label {
+		cursor: pointer;
+	}
+	.block-label {
+		text-transform: uppercase;
+		font-size: rem(13);
+		font-weight: 700;
+		color: $black;
+		display: block;
+		padding-bottom: 8px;
+	}
+	.inline-label {
+		@extend .block-label;
+		display: inline-block;
+		line-height: 1;
+	}
+	input[type="text"] {
+		@extend .btn;
+		border: none;
+		background-color: $grayBorder;
+		width: 100%;
+	}
+	.dropdown {
+		width: 100%;
+	}
+}
+
+.form-error {
+	text-align: right;
+	margin: 0;
+	font-size: rem(13);
+	color: $red;
+}
+
+.submit-poll__add {
+	font-size: rem(14);
+	color: $gray;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+

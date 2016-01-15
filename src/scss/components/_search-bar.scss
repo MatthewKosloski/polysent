@@ -1,0 +1,31 @@
+.search-bar-container {
+	max-height: 0;
+	opacity: 0;
+	@extend %transition--250ms;
+	@include placeholder {
+	    color: $gray;
+	  }
+	input[type="text"] {
+		@extend %transition--250ms;
+		@include border-radius("all", 4px);
+		width: 100%;
+		border: none;
+		font-size: rem(15);
+		text-align: center;
+		padding: 0;
+		color: $gray;
+		background-color: #fff;
+		border-bottom: 2px solid transparent;
+		max-height: 0;
+	}
+}
+
+.search-bar--visible {
+	max-height: 64px;
+	opacity: 1;
+	input[type="text"] {
+		padding: 20px;
+		max-height: 64px;
+		border-bottom: 2px solid $grayBorder;
+	}
+}

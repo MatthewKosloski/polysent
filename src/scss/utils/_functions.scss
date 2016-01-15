@@ -1,0 +1,46 @@
+//---------------------------
+//
+// Functions
+//
+//---------------------------
+
+//---------------------------
+//
+// Math functions
+// ==============
+//
+// These were taken from: https://github.com/dropbox/scooter
+//
+//---------------------------
+@function half($n) {
+  @return round($n / 2);
+}
+
+@function quarter($n) {
+  @return round($n / 4);
+}
+
+@function double($n) {
+  @return round($n * 2);
+}
+
+@function quadruple($n) {
+  @return round($n * 4);
+}
+
+//---------------------------
+//
+// Strip unit function
+// ===================
+//
+// Strips the unit/label from a unit.
+//
+// Usage:
+// strip-unit(42em); // 42
+//
+// This was taken from: http://hugogiraudel.com/2013/08/12/sass-functions/
+// 
+//---------------------------
+@function strip-unit($value) {
+	@return $value / ($value * 0 + 1);
+}

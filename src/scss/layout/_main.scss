@@ -1,0 +1,15 @@
+//---------------------------
+//
+// Main content area
+//
+//---------------------------
+
+.main {
+	padding: 60px 0;
+}
+
+.main--home {
+	@include breakpoint(sm) {
+		padding: 0;
+	}
+}

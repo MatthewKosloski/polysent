@@ -1,0 +1,101 @@
+//---------------------------
+//
+// Mixins
+//
+//---------------------------
+
+//---------------------------
+//
+// Border radius mixin
+// ===================
+//
+// Extends the border-radius property to all browsers.
+// If no radius is given, it will default to 4px.
+// 
+// Usage:
+// @include border-radius("top left", 5px);
+// @include border-radius("top right", 5px);
+// @include border-radius("bottom left", 5px);
+// @include border-radius("bottom right", 5px);
+// @include border-radius("all", 5px);
+//
+//---------------------------
+@mixin border-radius($side: null, $radius: 4px) {
+  $t: "top"; $l: "left"; $b: "bottom"; $r: "right";
+  $tb: str-index($side, $t);  $lr: str-index($side, $l);
+  @if ($side == "top left" or $side == "top right" or $side == "bottom left" or $side == "bottom right") {
+    -webkit-border-#{if($tb, $t, $b)}-#{if($lr, $l, $r)}-radius: $radius;
+    -moz-border-radius-#{if($tb, $t, $b)}#{if($lr, $l, $r)}: $radius;
+    border-#{if($tb, $t, $b)}-#{if($lr, $l, $r)}-radius: $radius;
+  } @else {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+  }
+}
+
+//---------------------------
+//
+// Breakpoint mixin
+// ==============
+//
+// Breakpoints for small, medium, large, and extra-large devices.
+// 
+// Usage:
+// @include breakpoint(md) {
+//     display: none; 
+// }
+//
+//---------------------------
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == "xs" {
+    @media (max-width: 550px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == "sm" {
+    @media (max-width: 640px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == "md" {
+    @media (max-width: 768px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == "lg" {
+    @media (max-width: 1025px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == "xl" {
+    @media (max-width: 1921px) {
+      @content;
+    }
+  }
+}
+
+//---------------------------
+//
+// Property mixin
+// ==============
+//
+// Share values for multiple properties
+// 
+// Usage:
+// @include share(padding-top, padding-bottom, 23px);
+//
+// This was taken from: https://github.com/dropbox/scooter
+//
+//---------------------------
+@mixin share($props.../*, $value */) {
+  @for $i from 1 to length($props) {
+    #{nth($props, $i)}: nth($props, -1);
+  }
+}
+

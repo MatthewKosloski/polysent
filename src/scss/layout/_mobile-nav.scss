@@ -1,0 +1,42 @@
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: -225px;
+    background-color: #222;
+    width: 225px;
+    height: 100%;
+    z-index: 99999999;
+    ul {
+    	margin-left: 0;
+    	li {
+            &:not(:last-child) {
+                border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            }
+    		list-style: none;
+    		display: block;
+    	}
+    }
+    a {
+        text-decoration: none;
+    	color: #fff;
+    	padding: 15px;
+    	display: block;
+    }
+}
+
+.mobile-nav--expand {
+    left: 0;
+}
+
+.globe {
+    left: 0;
+}
+
+.globe--contract {
+    left: 225px;
+}
+
+.mobile-nav,
+.globe {
+    @extend %transition--250ms;
+}

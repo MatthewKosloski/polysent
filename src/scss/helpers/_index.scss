@@ -1,0 +1,19 @@
+//---------------------------
+//
+// Helpers
+// =======
+//
+// The helpers folder contains rules that are used in markup, 
+// or via @extend, to add quick styling.
+//
+//---------------------------
+
+@import 
+	"clearfix",
+	"display",
+	"float",
+	"margin",
+	"padding",
+	"text-align",
+	"clamps",
+	"extends";

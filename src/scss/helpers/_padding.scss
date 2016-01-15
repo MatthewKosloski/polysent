@@ -1,0 +1,45 @@
+//---------------------------
+//
+// padding helpers
+// ==============
+// 
+// Outputs:
+// 
+// .pt--0 {
+//   padding-top: 0px;
+// }
+//
+// .pt--5 {
+//   padding-top: 5px;
+// }
+//
+// .pt--10 {
+//   padding-top: 10px;
+// }
+// ...and so on for each direction until 100.
+//
+//---------------------------
+$list: pt pl pb pr;
+
+@each $d in $list {
+  @for $i from 0 through 20 {
+      $j: ($i * 5);
+	  @if $d == pt {
+	    .#{$d}--#{$j} {
+	      padding-top: $j * 1px;
+	    }
+	  } @else if $d == pl {
+	    .#{$d}--#{$j} {
+	      padding-left: $j * 1px;
+	    }
+	  } @else if $d == pb {
+	    .#{$d}--#{$j} {
+	      padding-bottom: $j * 1px;
+	    }
+	  } @else if $d == pr {
+	    .#{$d}--#{$j} {
+	      padding-right: $j * 1px;
+	    }
+	  }
+  }
+}

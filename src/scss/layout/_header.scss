@@ -1,0 +1,147 @@
+//---------------------------
+//
+// Header
+//
+//---------------------------
+
+.top-header {
+	background-color: $purple;
+	padding: 18px 0;
+	color: $white;
+	z-index: 1;
+}
+
+.top-header-row {
+	@include display(flex);
+}
+
+.hamburger {
+	@include breakpoint(md) {
+		display: block;
+	}
+	width: 25px;
+	height: 18px;
+	display: none;
+	cursor: pointer;
+	span {
+		@include transform(rotate(0deg));
+		@include transition(0.15s linear);
+		background-color: $white;
+		position: absolute;
+		display: block;
+		width: 25px;
+		height: 2px;
+		&:nth-child(1) {
+			top: 0%;
+		}
+		&:nth-child(2) {
+			@include transition(opacity 0.15s linear);
+			top: 50%;
+		}
+		&:nth-child(3) {
+			top: 100%;
+		}
+	}
+}
+
+.hamburger--open {
+	span {
+		&:nth-child(1) {
+			@include transform(rotate(45deg));
+			top: 50%;
+		}
+		&:nth-child(2) {
+			opacity: 0;
+		}
+		&:nth-child(3) {
+			@include transform(rotate(-45deg));
+			top: 50%;
+		}
+	}
+}
+
+.logo {
+	@include breakpoint(md) {
+		@include display(flex);
+		@include flex(2);
+		@include justify-content(center);
+	}
+	margin: 0;
+	a {
+		text-decoration: none;
+		color: $white;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.top-header__search {
+	@include breakpoint(md) {
+		margin-right: 30px;
+	}
+	cursor: pointer;
+	margin-right: 45px;
+	opacity: 0.75;
+}
+
+.top-header__left,
+.top-header__right {
+	@include display(flex);
+	@include align-items(center);
+}
+
+.top-header__right {
+	@include justify-content(flex-end);
+	text-align: right;
+}
+
+.nav {
+	@include breakpoint(md) {
+		display: none;
+	}
+	@include flex(2 1 70%);
+	margin-left: 0;	
+	text-align: right;
+	font-size: rem(16);
+	li {
+		display: inline-block;
+		&:not(:last-child) {
+			margin-right: 15px;
+		}
+	}
+	a {
+		text-decoration: none;
+		color: $white;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.nav__item--active {
+	@include breakpoint(md) {
+		font-weight: normal;
+		// background-color: $darkPurple;
+	}
+	font-weight: 700;
+}
+
+.top-header .btn {
+	@include breakpoint(lg) {
+		padding: 3px 13px;
+		font-size: rem(21) !important;
+	}
+	background-color: $darkPurple;
+	color: $white;
+	&:hover,
+	&:active {
+		background-color: #fff;
+		color: $purple;
+	}
+	span {
+		@include breakpoint(lg) {
+			display: none;
+		}
+	}
+}

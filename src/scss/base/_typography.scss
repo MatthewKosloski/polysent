@@ -1,0 +1,45 @@
+//---------------------------
+//
+// Typography
+//
+//---------------------------
+
+h1, h2, h3, h4, h5, h6 {
+	margin-bottom: $baseline;
+}
+
+h1 {
+	font-size: rem(24);
+}
+
+h2 {
+	font-size: rem(22);
+}
+
+h3 {
+	font-size: rem(18);
+}
+
+h4 {
+	font-size: rem(16);
+}
+
+h5 {
+	font-size: rem(12);
+}
+
+h6 {
+	font-size: rem(10);
+}
+
+body {
+	color: $gray;
+}
+
+a {
+	text-decoration: underline;
+	color: $purple;
+	&:hover {
+		text-decoration: none;
+	}
+}

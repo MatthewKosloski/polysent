@@ -1,0 +1,15 @@
+footer {
+	border-top: 2px solid $grayBorder;
+	padding: 15px 0;
+	color: $gray;
+	font-size: rem(13);
+	font-weight: 400;
+	text-align: left;
+	a {
+		color: inherit;
+		text-decoration: underline;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}

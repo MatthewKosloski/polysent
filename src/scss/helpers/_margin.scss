@@ -1,0 +1,45 @@
+//---------------------------
+//
+// Margin helpers
+// ==============
+// 
+// Outputs:
+// 
+// .mt--0 {
+//   margin-top: 0px;
+// }
+//
+// .mt--5 {
+//   margin-top: 5px;
+// }
+//
+// .mt--10 {
+//   margin-top: 10px;
+// }
+// ...and so on for each direction until 100.
+//
+//---------------------------
+$list: mt ml mb mr;
+
+@each $d in $list {
+  @for $i from 0 through 20 {
+      $j: ($i * 5);
+	  @if $d == mt {
+	    .#{$d}--#{$j} {
+	      margin-top: $j * 1px;
+	    }
+	  } @else if $d == ml {
+	    .#{$d}--#{$j} {
+	      margin-left: $j * 1px;
+	    }
+	  } @else if $d == mb {
+	    .#{$d}--#{$j} {
+	      margin-bottom: $j * 1px;
+	    }
+	  } @else if $d == mr {
+	    .#{$d}--#{$j} {
+	      margin-right: $j * 1px;
+	    }
+	  }
+  }
+}

@@ -1,0 +1,45 @@
+//---------------------------
+//
+// Buttons
+//
+//---------------------------
+
+
+.btn {
+	@include border-radius("all", 4px);
+	padding: 9px 13px;
+	font-weight: 400;
+	font-size: rem(15);
+	text-decoration: none;
+}
+
+.btn--purple {
+	background-color: $purple;
+	border: 2px solid transparent;
+	padding: 7px 13px;
+	color: #fff;
+	&:hover {
+		background-color: transparent;
+		border-color: $purple;
+		color: $purple;
+	}
+}
+
+.btn--error {
+	background-color: $red;
+	opacity: 0.8;
+	&:hover {
+		background-color: $red;
+		border-color: transparent;
+		color: $white;
+	}
+}
+
+.btn--gray {
+	background-color: $lightGray;
+	&:hover {
+		background-color: $lightGray;
+		border-color: transparent;
+		color: $white;
+	}
+}

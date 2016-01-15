@@ -1,0 +1,10 @@
+$widths: 550px, 640px, 768px, 960px;
+@each $width in $widths {
+	.row--#{str-slice(#{$width}, 0, -3)} {
+		max-width: $width;
+	}
+}
+
+.row--flex {
+	@include display(flex);
+}

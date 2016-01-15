@@ -1,0 +1,33 @@
+.toggle {
+  @extend .btn;
+  padding: 0;
+  height: rem(40);
+  line-height: rem(40);
+  background-color: $grayBorder;
+  font-size: 0;
+  color: $gray;
+  label {
+    padding: 0 13px;
+    display: inline-block;
+    height: inherit;
+    font-size: rem(15);
+  }
+}
+
+.toggle__checkbox {
+  display: none;
+  &:checked ~ .toggle__true,
+  &:not(:checked) ~ .toggle__false {
+    background-color: $purple;
+    color: $white;
+  }
+  &:checked ~ .toggle__true {
+    @include border-radius("top right", 4px);
+    @include border-radius("bottom right", 4px);
+
+  }
+  &:not(:checked) ~ .toggle__false {
+    @include border-radius("top left", 4px);
+    @include border-radius("bottom left", 4px);
+  }
+}

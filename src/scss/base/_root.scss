@@ -1,0 +1,18 @@
+//---------------------------
+//
+// Root
+//
+//---------------------------
+
+html, :root {
+	@include breakpoint(md) {
+		font-size: 105%;
+	}
+    @include breakpoint(sm) {
+    	font-size: 100%;
+    }
+	font: normal 112.5%/#{$line-height} "Open Sans", "Helvetica Neue", Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	box-sizing: border-box;
+}

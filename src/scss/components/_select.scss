@@ -1,0 +1,10 @@
+select {
+	@extend .dropdown__btn;
+	cursor: pointer;
+	height: 40px;
+}
+
+.dropdown--red {
+	border-color: $red;
+	color: $red;
+}

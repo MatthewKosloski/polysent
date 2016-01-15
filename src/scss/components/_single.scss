@@ -1,0 +1,111 @@
+.single-poll {
+	padding-bottom: 75px;
+}
+
+.single-poll__title {
+	h3 {
+		font-size: rem(15);
+		font-weight: normal;
+		margin: 0;
+	}
+	h2 {
+		font-weight: 700;
+		font-size: rem(22);
+		color: $black;
+	}
+}
+
+.single-options {
+	&:not(:last-child) {
+		margin-bottom: 35px;
+	}
+}
+
+.toggle--selected {
+	@extend %option-active-state;
+}
+
+.single-option__left,
+.single-option__right,
+.option-bar {
+	float: left;
+}
+
+.single-option__left {
+	width: 7%;
+}
+
+.single-option__right {
+	width: 93%;
+}
+
+.single-option__toggle {
+	@include transition(border 0.25s ease-in-out);
+	@include border-radius("all", 100%);
+	width: 14px;
+	height: 14px;
+	background-color: $purple;
+	border: 2px solid $white;
+	box-shadow: 0px 0px 0px 1px $purple;
+	display: inline-block;
+	cursor: pointer;
+	margin-right: 12px;
+}
+
+.single-option {
+	@extend %clearfix;
+	&:not(:last-of-type) {
+		padding-bottom: 25px;
+	}
+	input[type="radio"] {
+		display: none;
+		&:checked + label,
+		.toggle--selected {
+			@extend %option-active-state;
+		}
+	}
+}
+
+%option-active-state {
+	@include transition(border 0.25s ease-in-out);
+	border: 0px solid transparent;
+}
+
+.single-option__title {
+	font-weight: 600;
+	font-size: rem(16);
+	color: $purple;
+	margin: 0;
+	// cursor: pointer;
+	overflow: hidden;
+	display: inline-block;
+	max-width: 75%;
+}
+
+.single-option__meta {
+	text-align: right;
+	font-size: rem(13);
+	font-weight: 400;
+	color: $gray;
+	float: right;
+    line-height: 2;
+}
+
+.option-bar {
+	width: 100%;
+	.option-bar__entire,
+	.option-bar__taken {
+		height: 2px;
+	}
+	.option-bar__entire {
+		background-color: $grayBorder;
+		width: 100%;
+	}
+	.option-bar__taken {
+		@include transition(width 0.3s ease-in-out);
+		background-color: $purple;
+		position: absolute;
+		bottom: 0;
+		width: 0%;
+	}
+}

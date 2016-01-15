@@ -1,0 +1,19 @@
+.page-header {
+	h2 {
+		font-size: rem(18);
+		font-weight: 400;
+		color: $purple;
+		margin-bottom: -2px; /* compensate for 2px .page-header border-bottom */
+		border-bottom: 2px solid $purple;
+		display: inline-block;
+	}
+	h3 {
+		margin: 0;
+		font-weight: 400;
+	}
+	h2, h3 {
+		padding: 16px 0;
+	}
+	margin-bottom: 50px;
+	border-bottom: 2px solid $grayBorder;
+}

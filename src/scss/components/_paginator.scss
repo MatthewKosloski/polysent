@@ -1,0 +1,70 @@
+.paginator {
+	margin-left: 0;
+	text-align: center;
+	li {
+		list-style: none;
+		display: inline-block;
+	}
+}
+
+.paginatorBtn a,
+.paginatorTxt a {
+	font-size: rem(13);
+	text-decoration: none;
+}
+
+.paginatorBtn {
+	margin-right: 5px;
+}
+
+.paginatorBtn {
+	a {
+		@include border-radius('all', 4px);
+		padding: 10px 17px;
+		background-color: $grayBorder;
+		color: $gray;
+		&:hover {
+			background-color: $purple;
+			color: $white;
+		}
+	}
+}
+
+.paginatorTxt {
+    a {
+    	text-transform: uppercase;
+    	font-weight: 700;
+    }
+}
+
+.paginatorBtnActive {
+	a {
+		background-color: $purple;
+		color: $white;
+	}
+}
+
+.paginatorTxtLeft {
+	a {
+		margin-left: 0;
+		margin-right: 15px;
+	}
+}
+
+.paginatorTxtRight {
+	a {
+		margin-right: 0;
+		margin-left: 15px;
+	}
+}
+
+.paginatorElipses {
+	a {
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	margin-left: 10px;
+	margin-right: 15px;
+}
