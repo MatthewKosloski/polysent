@@ -29,39 +29,3 @@ PollSchema.post('save', function (doc) {
 
 PollModel = mongoose.model('Poll', PollSchema);
 module.exports = PollModel;
-
-/* removed the virtual attribute and replaced it with the following
-	aggregation because you can't query virtuals */
-
-// PollSchema.virtual('totalVotes').get(function() {
-// 	return this.votes.reduce(function(currentValue, previousValue){
-// 	     return (currentValue + previousValue);
-// 	  });
-// });
-
-
-// PollModel.aggregate(
-//   [
-//     { $unwind : '$options' },
-//     { $group : { _id: '$_id', totalVotes: {$sum: '$options.votes'} } },
-//   ],
-//   	function(err, results){
-//   	// console.log(results);
-// 	  	results.forEach(function(result){
-// 			var conditions = { _id: result._id }, 
-// 				update = { totalVotes: result.totalVotes }, 
-// 				options = { multi: true };
-
-// 			PollModel.update(conditions, update, options, callback);
-
-// 			function callback (err, numAffected) {
-// 			 	if(err) {
-// 			 		console.error(err);
-// 			 		return;
-// 			 	} else {
-// 			 		// console.log(numAffected);
-// 			 	}
-// 			}
-//     	});
-//   }
-// );
