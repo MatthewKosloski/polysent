@@ -104,7 +104,7 @@ exports.random = function (req, res) {
 exports.featured = function (req, res) {
     var pageNumber = req.query.page,
         per_page = req.query.per_page;
-    Poll.paginate({featured: true, private: false}, { page: pageNumber, limit: per_page }, function(err, result) {
+    Poll.paginate({featured: true, private: false}, { page: pageNumber, limit: per_page, sort: {totalVotes: 'desc'} }, function(err, result) {
     if(err) return res.sendStatus(500, err);
         res.status(200).json(result);
     });
@@ -144,7 +144,6 @@ exports.topRated = function (req, res) {
  * POST request --- post a new poll
  */
 exports.create = function (req, res) {
-    console.log(req.body);
     var newPoll = new Poll(req.body);
     newPoll.save(function(err, docs) {
     if (err) {
