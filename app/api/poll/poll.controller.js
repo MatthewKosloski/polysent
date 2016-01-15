@@ -85,7 +85,7 @@ exports.vote = function (req, res) {
  */
 exports.random = function (req, res) {
     var pollCategory = req.params.category;
-        Poll.findRandom({category: pollCategory}, {}, {limit: 4}, function(err, docs) {
+        Poll.findRandom({category: pollCategory, private: false}, {}, {limit: 4}, function(err, docs) {
         if (err) {
             // res.render('error', {message: 'Couldn\'t retrieve polls from that category.', error: {status: '500'}});
             res.status(500).json({message: 'Couldn\'t retrieve polls from that category.'});
