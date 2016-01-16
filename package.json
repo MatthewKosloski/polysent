@@ -14,6 +14,7 @@
     "i": "^0.3.3",
     "mongoose": "^4.3.4",
     "mongoose-auto-increment": "^5.0.1",
+    "mongoose-minid": "^1.1.1",
     "mongoose-paginate": "^5.0.0",
     "mongoose-simple-random": "^0.3.3",
     "morgan": "~1.6.1",

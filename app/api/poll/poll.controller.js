@@ -113,7 +113,7 @@ exports.featured = function (req, res) {
 exports.newest = function (req, res) {
     var pageNumber = req.query.page,
         per_page = req.query.per_page;
-    Poll.paginate({private: false}, { page: pageNumber, limit: per_page, sort: {_id: 'desc'} }, function(err, result) {
+    Poll.paginate({private: false}, { page: pageNumber, limit: per_page, sort: {index: 'desc'} }, function(err, result) {
     if(err) return res.sendStatus(500, err);
         res.status(200).json(result);
     });

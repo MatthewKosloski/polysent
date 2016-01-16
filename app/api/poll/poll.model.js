@@ -5,7 +5,11 @@ var autoIncrement = require('mongoose-auto-increment'),
 	mongoosePaginate = require('mongoose-paginate'),
 	random = require('mongoose-simple-random');
 
+var ShortId = require('mongoose-minid');
+
 var PollSchema = new Schema({
+	_id: {type: ShortId, len: 5},
+	index: {type: Number},
 	question: {type: String, required: true},
 	category: {type: String, required: true},
 	featured: {type: Boolean, default: false},
@@ -19,7 +23,7 @@ var PollSchema = new Schema({
 	}]
 });
 
-PollSchema.plugin(autoIncrement.plugin, {model: 'Poll', startAt: 1});
+PollSchema.plugin(autoIncrement.plugin, {model: 'Poll', field: 'index', startAt: 1});
 PollSchema.plugin(mongoosePaginate);
 PollSchema.plugin(random);
 

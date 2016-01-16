@@ -10,8 +10,6 @@
 			'restangularPoll',
 			'$location', function($scope, $stateParams, Restangular, localStorage, restangularPoll, $location){
 
-			if(isNaN($stateParams.id)) $location.path('/');
-
 			$scope.single = [];
 			$scope.related = [];
 

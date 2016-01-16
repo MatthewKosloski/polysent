@@ -5,7 +5,7 @@
 		return {
 			link: function(scope, element, attributes) {
 				var upvotesArray = localStorage.getArray('upvotes'),
-					id = Number(attributes.checkIfUpvoted);
+					id = attributes.checkIfUpvoted;
 				if(upvotesArray.indexOf(id) !== -1) {
 					element.addClass(classes.pollUpvoted);
 				}
