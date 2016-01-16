@@ -1,0 +1,19 @@
+.label {
+	@include border-radius('all', 2px);
+	font-weight: 700;
+    font-size: rem(10);
+    padding: 4px 8px;
+    margin-left: 4px;
+    display: inline-block;
+    background-color: $grayBorder;
+    color: $gray;
+}
+
+.label--uppercase {
+	text-transform: uppercase;
+}
+
+.label--yellow {
+	background-color: $labelYellow;
+	color: $labelYellowText;
+}
