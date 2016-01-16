@@ -15,7 +15,8 @@
 			'random',
 			'science',
 			'sports',
-			'technology'
+			'technology',
+			'uncategorized'
 		];
 
 		var filterCategories = [];
