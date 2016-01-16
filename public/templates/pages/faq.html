@@ -1,0 +1,11 @@
+<div class="main main--home">
+    <page-header row="row--768" title="FAQ"></page-header>
+    <div class="row row--768">
+        <div class="column large-12 medium-12 small-12">
+            <div class="faq" ng-repeat="faq in faqs">
+                <h3 ng-bind="faq.question"></h3>
+                <p ng-bind-html="renderHtml(faq.answer)"></p>
+            </div>
+        </div>
+    </div>
+</div>

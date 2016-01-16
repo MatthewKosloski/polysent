@@ -1,0 +1,53 @@
+<div class="main main--home">
+    <div class="row">
+        <div class="column large-12 medium-12 small-12">
+            <div class="auxiliary auxiliary--has-mobile">
+                <div class="row">
+                    <div class="column large-9 medium-8 small-12 auxiliary--left">
+                        <div class="auxiliary-mobile">
+                            <a class="auxiliary__location" href="javascript:void(0);">{{tab}}</a>
+                            <ul class="auxiliary__sorters">
+                                <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'featured'}" ng-click="setPostType('featured')">
+                                    <a href="javascript:void(0);">Featured</a>
+                                </li>
+                                <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'newest'}" ng-click="setPostType('newest')">
+                                    <a href="javascript:void(0);">Newest</a>
+                                </li>
+                                <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'most-votes'}" ng-click="setPostType('most-votes')">
+                                    <a href="javascript:void(0);">Most Votes</a>
+                                </li>
+                                <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'top-rated'}" ng-click="setPostType('top-rated')">
+                                    <a href="javascript:void(0);">Top Rated</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column large-3 medium-4 small-12 auxiliary--right">
+                        <select ng-options="category as category.label for category in categories track by category.label" ng-model="selectedCategory"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column large-12 medium-12 small-12">
+            <div class="row poll-row">
+                <div class="column large-3 medium-4 small-6 poll-column" ng-repeat="poll in polls track by $index" ng-if="isViewable(poll)">
+                    <poll poll-data="poll" poll-upvote="upvote"></poll>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="busyLoading">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+    <div class="row" ng-show="!busyLoading">
+        <div class="large-12 medium-12 small-12">
+            <uib-pagination previous-text="Prev" total-items="totalPolls" items-per-page="polls_per_page" ng-model="currentPollPage" max-size="maxAmountOfPolls" boundary-link-numbers="true" rotate="false" ng-change="loadPollsByType(postType)"></uib-pagination>
+        </div>
+    </div>
+</div>
