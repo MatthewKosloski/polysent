@@ -10,6 +10,7 @@ var ShortId = require('mongoose-minid');
 var PollSchema = new Schema({
 	_id: {type: ShortId, len: 5},
 	index: {type: Number},
+	submittedBy: {type: String},
 	question: {type: String, required: true},
 	category: {type: String, required: true},
 	featured: {type: Boolean, default: false},
