@@ -7,7 +7,7 @@ exports.search = function (req, res) {
     var query = new RegExp(req.query.q, 'i'),
         pageNumber = req.query.page,
         per_page = req.query.per_page;
-    Poll.paginate({$or:[ { 'question': query}, {'category': query}, {'options.title': query} ]}, { page: pageNumber, limit: per_page }, function(err, docs){
+    Poll.paginate({$or:[ { 'question': query}, {'category': query}, {'options.title': query}], private: false}, { page: pageNumber, limit: per_page }, function(err, docs){
         if (err) {
             // res.render('error', {message: 'There was an error getting those poll.', error: {status: '500'}});
             res.status(500).json({message: 'There was an error getting those polls.'});
