@@ -4,7 +4,7 @@
             <div class="column large-12 medium-12 small-12">
                 <section class="single-poll__title">
                     <h3>{{single.totalVotes}} vote<span ng-if="isPlural(single.totalVotes)">s</span></h3>
-                    <h2 ng-bind="single.question"></h2>
+                    <h2>{{single.question}} <div ng-if="single.private" class="label label--uppercase label--yellow">private</div></h2>
                 </section> 
             </div>
         </div> 
@@ -17,7 +17,7 @@
                             <label class="single-option__toggle" for="option-{{$index}}" ng-click="vote(single._id, $index)" ng-class="{'toggle--selected': isVoted(single._id, $index)}"></label>
                         </div>
                         <div class="single-option__right">
-                            <span class="single-option__title" ng-bind="option.title"></span>
+                            <span class="single-option__title">{{option.title}}</span>
                             <div class="single-option__meta">{{getPercentage(option.votes, single.totalVotes)}}%, {{option.votes}} vote<span ng-if="isPlural(option.votes)">s</span></div>
                             <div class="option-bar">
                                 <div class="option-bar__entire"></div>
@@ -30,44 +30,16 @@
             </div>
         </div> 
     </div>
-    <page-header title="Related"></page-header>
-    <div class="row">
-        <div class="column large-12 medium-12 small-12">
-            <div class="row poll-row">
-                <div class="column large-3 medium-4 small-6 poll-column" ng-repeat="poll in related track by $index">
-                    <poll poll-data="poll" poll-upvote="upvote"></poll>
+    <div ng-if="related.length">
+        <page-header title="Related"></page-header>
+        <div class="row">
+            <div class="column large-12 medium-12 small-12">
+                <div class="row poll-row">
+                    <div class="column large-3 medium-4 small-6 poll-column" ng-repeat="poll in related track by $index">
+                        <poll poll-data="poll" poll-upvote="upvote"></poll>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="column large-3 medium-4 small-6 poll-column" ng-repeat="poll in polls" ng-if="isViewable(poll)">
-    <a href="/p/{{::poll._id}}">
-        <div class="poll">
-            <div id="upvote" class="poll-upvote">
-                <span class="poll-upvote__shape"></span>
-                <span class="poll-upvote__number" ng-bind="poll.upvotes"></span>
-            </div>
-            <h3 class="poll__title line-clamp-3" ng-bind="poll.question"></h3>
-            <ul class="poll__bars">
-                <li ng-repeat="option in poll.options track by $index" style="background-color:rgba(127,101,183,{{getPercentage(option.votes, poll.totalVotes) / 100}});max-height:{{getPercentage(option.votes, poll.totalVotes)}}%;">   
-                    <span ng-bind="option.votes"></span>
-                </li>
-            </ul>
-        </div>
-    </a>
-</div> -->
