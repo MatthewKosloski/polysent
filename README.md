@@ -22,7 +22,12 @@ Polysent is an online poll maker that allows you to instantly obtain anonymously
 
 1. SSH into the server via Terminal.
 
-2. Update the code on the server: 
+2. Tell NVM to use Node v5.
+  ```sh
+    $ nvm use 5.0
+  ``` 
+  
+3. Update the code on the server: 
   ```sh
     $ rm -rf /opt/polysent && git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent && cd /opt/polysent && npm install && pm2 restart server
   ```
