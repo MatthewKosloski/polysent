@@ -29,5 +29,5 @@
   
 3. Update the code on the server: 
   ```sh
-    $ rm -rf /opt/polysent && git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent && cd /opt/polysent && npm install && pm2 restart server
+    $ sudo rm -rf /opt/polysent && sudo git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent && cd /opt/polysent && sudo npm install && sudo pm2 restart server
   ```
