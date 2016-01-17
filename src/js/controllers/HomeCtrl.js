@@ -50,7 +50,7 @@
 				restangularPoll.one(type).get({page: $scope.currentPollPage, per_page: $scope.polls_per_page}).then(function(response) {
 					$scope.polls = response.data.docs;
 					$scope.totalPolls = response.data.total;
-					console.log(response);
+					// console.log(response);
 					$scope.busyLoading = false;
 				});
 			};
