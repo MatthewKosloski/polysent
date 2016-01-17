@@ -18,7 +18,7 @@ Polysent is an online poll maker that allows you to instantly obtain anonymously
     $ gulp
   ```
   
-  ##Deploying to Digital Ocean
+##Deploying to Digital Ocean
 
 1. SSH into the server via Terminal.
 
