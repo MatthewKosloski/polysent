@@ -20,14 +20,25 @@
   
 ##Deploying to Digital Ocean
 
-1. SSH into the server via Terminal.
+1. SSH into the server via Terminal. (<username>@PUBLIC_IP_ADDRESS)
 
 2. Tell NVM to use Node v5.
   ```sh
     $ nvm use 5.0
   ``` 
   
-3. Update the code on the server: 
+3. Clone this repo.
   ```sh
-    $ sudo rm -rf /opt/polysent && sudo git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent && cd /opt/polysent && sudo npm install && sudo pm2 restart server
-  ```
+    $ git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent
+  ``` 
+  
+4. Change directory to `/opt/polysent` and install the node modules.
+  ```sh
+    $ cd /opt/polysent
+    $ npm install
+  ``` 
+  
+5. Restart the server.
+  ```sh
+    $ pm2 restart server
+  ``` 
