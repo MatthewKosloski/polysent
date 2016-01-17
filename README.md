@@ -20,7 +20,7 @@
   
 ##Deploying to Digital Ocean
 
-1. SSH into the server via Terminal. (<username>@PUBLIC_IP_ADDRESS)
+1. SSH into the server via Terminal. (username@PUBLIC_IP_ADDRESS)
 
 2. Tell NVM to use Node v5.
   ```sh
