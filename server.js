@@ -43,6 +43,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.disable('x-powered-by');
+app.enable('trust proxy');
 
 // CORS Support
 // ------------------------------------------------------
