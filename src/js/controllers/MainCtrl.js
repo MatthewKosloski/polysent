@@ -11,12 +11,19 @@
 			'restangularPoll',
 			'Query', function($scope, $location, Restangular, localStorage, Categories, restangularPoll, Query){
 
-
-			/*
-				Put all globally utilized functions/values in here,
-				so they can be inherited from this parent scope.
-			*/
-
+			$scope.modal = {};
+			$scope.$on('modal', function(event, args) { 
+				$scope.modal.show = args.show;
+				$scope.modal.width = args.width;
+				$scope.modal.height = args.height;
+				$scope.modal.iconClass = args.iconClass;
+				$scope.modal.heading = args.heading;
+				$scope.modal.subHeading = args.subHeading;
+				$scope.modal.buttonText = args.buttonText;
+				$scope.modal.buttonAction = args.buttonAction;
+				$scope.modal.animationClasses = args.animationClasses;
+			});
+				
 			if(localStorage.getItem('upvotes') === null) {
 				localStorage.pushArrayItem('upvotes', 0);
 			} 
