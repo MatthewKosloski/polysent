@@ -6,7 +6,8 @@
 			'$scope', 
 			'Restangular', 
 			'restangularPoll',
-			'Categories', function($scope, Restangular, restangularPoll, Categories){
+			'Categories',
+			function($scope, Restangular, restangularPoll, Categories){
 
 			$scope.categories = Categories.filterCategories;
 			$scope.selectedCategory = Categories.filterCategories[0];
@@ -18,7 +19,7 @@
 
 			$scope.currentPollPage = 1;
 			$scope.polls_per_page = 24;
-			$scope.maxAmountOfPolls = 5;
+			$scope.maxAmountOfPolls = 3;
 
 			/*
 				Function called by auxiliary tabs (featured, newest, most votes, etc.).
@@ -50,9 +51,12 @@
 				restangularPoll.one(type).get({page: $scope.currentPollPage, per_page: $scope.polls_per_page}).then(function(response) {
 					$scope.polls = response.data.docs;
 					$scope.totalPolls = response.data.total;
-					// console.log(response);
 					$scope.busyLoading = false;
 				});
+			};
+
+			$scope.setCategory = function(category) {
+				$scope.selectedCategory = category;
 			};
 
 			$scope.loadPollsByType($scope.postType);
