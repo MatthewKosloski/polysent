@@ -144,15 +144,11 @@ exports.topRated = function (req, res) {
  * POST request --- post a new poll
  */
 exports.create = function (req, res) {
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    // console.log(ip);
-    // console.log(req.body);
     var newPoll = new Poll(req.body);
+    newPoll.submittedBy = req.ip;
+    newPoll.category = req.body.category.label;
     newPoll.save(function(err, docs) {
-    if (err) {
-        // res.sendStatus({message: 'There was a problem creating the poll.'});
-        console.error(err);
-    }
+        if(err) res.status(500).json({message: 'An error occurred while saving the poll.'});
         res.status(200).json(docs);
     });
 };
