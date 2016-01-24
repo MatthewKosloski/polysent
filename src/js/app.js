@@ -19,43 +19,36 @@
 			'$provide', 
 			'RestangularProvider', function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider, $provide, RestangularProvider) {		
 				$stateProvider
-					.state('home', 
-						{
+					.state('home', {
 							url: '/',
 							templateUrl: './templates/pages/home.html',
 							controller: 'HomeCtrl'
 						}
 					)
-					.state('about', 
-						{
+					.state('about', {
 							url: '/about',
 							templateUrl: './templates/pages/about.html',
 							controller: 'AboutCtrl'
 						}
 					)
-					.state('faq', 
-						{
+					.state('faq', {
 							url: '/faq',
-							templateUrl: './templates/pages/faq.html',
-							controller: 'FaqCtrl'
+							templateUrl: './templates/pages/faq.html'
 						}
 					)
-					.state('single', 
-						{
+					.state('single', {
 							url: '/p/:id',
 							templateUrl: './templates/pages/single.html',
 							controller: 'SingleCtrl'
 						}
 					)
-					.state('new', 
-						{
+					.state('new', {
 							url: '/new',
 							templateUrl: './templates/pages/new.html',
 							controller: 'NewCtrl'
 						}
 					)
-					.state('search', 
-						{
+					.state('search', {
 							url: '/search',
 							templateUrl: './templates/pages/search.html',
 							controller: 'SearchCtrl'
