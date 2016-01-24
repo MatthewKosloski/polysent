@@ -26,19 +26,42 @@
   ```sh
     $ nvm use 5.0
   ``` 
+
+3. Remove the old directory.
+  ```sh
+    $ rm -rf /opt/polysent
+  ``` 
   
-3. Clone this repo.
+4. Clone this repo into `/opt/polysent`.
   ```sh
     $ git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent
   ``` 
   
-4. Change directory to `/opt/polysent` and install the node modules.
+5. Change directory to `/opt/polysent` and install the node modules.
   ```sh
     $ cd /opt/polysent
     $ npm install
   ``` 
   
-5. Restart the server.
+6. Restart the server.
   ```sh
     $ pm2 restart server
   ``` 
+
+##In the event of an error after all steps:
+
+If the server errors, do the first 5 steps again.  Then, after the 5th step:
+
+1. Show the list of the currently running processes.  Under "status" for the server app it should say "errored" in red. 
+  ```sh
+    $ pm2 list
+  ``` 
+2. Delete the server process and refresh the list.  (process should be removed and the list empty)
+  ```sh
+    $ pm2 delete server
+  ``` 
+3. Now to recreate the process, run this:
+  ```sh
+    $ NODE_ENV=production PORT=80 pm2 start server.js --watch
+  ``` 
+4. Run the `pm2 list` command at lease two times.  If it doesn't say "errored," all is good! :)
