@@ -2,8 +2,7 @@
     <page-header row="row--640" title="New Poll"></page-header>
     <div class="row row--640">
         <div class="column large-12 medium-12 small-12">
-            <form name="pollForm" novalidate class="submit-poll" ng-submit="addPoll()">
-
+            <form name="pollForm" novalidate class="submit-poll" ng-submit="addPoll()" autocomplete="off">
                 <fieldset>
                     <div class="row">
                         <div class="column large-12 medium-12 small-12">
@@ -12,7 +11,6 @@
                         </div>
                     </div>
                 </fieldset>
-
                 <fieldset ng-repeat="option in options track by $index">
                     <div class="row">
                         <div class="column large-12 medium-12 small-12">
@@ -21,33 +19,31 @@
                         </div>
                     </div>
                 </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <div class="column large-12 medium-12 small-12">
-                            <a href="javascript:void(0);" class="submit-poll__add" ng-click="addOption()">+ another option</a>
+                            <a href="#" class="submit-poll__add" ng-click="addOption()">+ another option</a>
                         </div>
                     </div>
                 </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <div class="column large-12 medium-12 small-12">
-                            <select ng-options="category as category.label for category in categories track by category.label" ng-model="newPoll.category" name="category" required>
-                                <option value="">select a category</option>
+                            <select class="display--none" ng-options="category as category.label for category in categories track by category.label" ng-model="newPoll.category" required>
+                                <option value="">choose a category</option> 
                             </select>
+                            <div class="dropdown dropdown--purple dropdown--relative" uib-dropdown>
+                                <button class="dropdown__btn" tabindex="0" uib-dropdown-toggle id="category-dropdown-toggle">
+                                    <span ng-if="!newPoll.category.label">choose a category</span>
+                                    <span ng-if="newPoll.category.label">{{newPoll.category.label}}</span>
+                                </button>
+                                <ul class="dropdown__list" uib-dropdown-menu aria-labelledby="category-dropdown-toggle">
+                                    <li class="dropdown-item" ng-repeat="category in categories" ng-click="newPoll.category = category" ng-class="{'dropdown-item--active': newPoll.category.label === category.label}"><a href="#">{{category.label}}</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
-
-                <fieldset ng-if="message">
-                    <div class="row">
-                        <div class="column large-12 medium-12 small-12">
-                            <small>{{message}}</small>
-                        </div>
-                    </div>
-                </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <div class="column large-4 medium-4 small-4">
@@ -69,7 +65,6 @@
                         </div>
                     </div>
                 </fieldset>
-
             </form>
         </div>
     </div>
