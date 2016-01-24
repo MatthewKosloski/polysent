@@ -48,7 +48,7 @@
     $ pm2 restart server
   ``` 
 
-###In the event of an error after all steps:
+###In the event of an error after all steps
 
 If the server errors, do the first 5 steps again.  Then, after the 5th step:
 
