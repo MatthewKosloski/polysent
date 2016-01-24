@@ -44,7 +44,7 @@
 	}
 }
 
-.hamburger--open {
+.hamburger--x {
 	span {
 		&:nth-child(1) {
 			@include transform(rotate(45deg));
@@ -62,9 +62,7 @@
 
 .logo {
 	@include breakpoint(md) {
-		@include display(flex);
-		@include flex(2);
-		@include justify-content(center);
+		display: none;
 	}
 	margin: 0;
 	a {
