@@ -48,23 +48,23 @@
     $ pm2 restart server
   ``` 
 
-###In the event of an error after all steps
-
-If the server errors, do the first 5 steps again.  Then, after the 5th step:
-
-1. Show the list of the currently running processes.  Under "status" for the server app it should say "errored" in red. 
-  ```sh
-    $ pm2 list
-  ``` 
+  ###In the event of an error after all steps
   
-2. Delete the server process and refresh the list.  (process should be removed and the list empty)
-  ```sh
-    $ pm2 delete server
-  ``` 
+  If the server errors, do the first 5 steps again.  Then, after the 5th step:
   
-3. Now to recreate the process, run this:
-  ```sh
-    $ NODE_ENV=production PORT=80 pm2 start server.js --watch
-  ``` 
-  
-4. Run the `pm2 list` command at least two times to check for fatal errors.
+  1. Show the list of the currently running processes.  Under "status" for the server app it should say "errored" in red. 
+    ```sh
+      $ pm2 list
+    ``` 
+    
+  2. Delete the server process and refresh the list.  (process should be removed and the list empty)
+    ```sh
+      $ pm2 delete server
+    ``` 
+    
+  3. Now to recreate the process, run this:
+    ```sh
+      $ NODE_ENV=production PORT=80 pm2 start server.js --watch
+    ``` 
+    
+  4. Run the `pm2 list` command at least two times to check for fatal errors.
