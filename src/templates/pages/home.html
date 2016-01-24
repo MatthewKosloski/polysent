@@ -1,29 +1,34 @@
 <div class="main main--home">
     <div class="row">
         <div class="column large-12 medium-12 small-12">
-            <div class="auxiliary auxiliary--has-mobile">
+            <div class="auxiliary">
                 <div class="row">
                     <div class="column large-9 medium-8 small-12 auxiliary--left">
                         <div class="auxiliary-mobile">
-                            <a class="auxiliary__location" href="javascript:void(0);">{{tab}}</a>
-                            <ul class="auxiliary__sorters">
+                            <a class="auxiliary__location" href="#" mobile-auxiliary-trigger>{{postType | unslugify: '-'}}</a>
+                            <ul class="auxiliary__sorters" mobile-auxiliary-trigger>
                                 <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'featured'}" ng-click="setPostType('featured')">
-                                    <a href="javascript:void(0);">Featured</a>
+                                    <a href="#">Featured</a>
                                 </li>
                                 <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'newest'}" ng-click="setPostType('newest')">
-                                    <a href="javascript:void(0);">Newest</a>
+                                    <a href="#">Newest</a>
                                 </li>
                                 <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'most-votes'}" ng-click="setPostType('most-votes')">
-                                    <a href="javascript:void(0);">Most Votes</a>
+                                    <a href="#">Most Votes</a>
                                 </li>
                                 <li class="auxiliary-item" ng-class="{'auxiliary-item--active': postType == 'top-rated'}" ng-click="setPostType('top-rated')">
-                                    <a href="javascript:void(0);">Top Rated</a>
+                                    <a href="#">Top Rated</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="column large-3 medium-4 small-12 auxiliary--right">
-                        <select ng-options="category as category.label for category in categories track by category.label" ng-model="selectedCategory"></select>
+                        <div class="dropdown dropdown--purple float--right" uib-dropdown>
+                            <button class="dropdown__btn" tabindex="0" uib-dropdown-toggle id="category-dropdown-toggle">{{selectedCategory.label}}</button>
+                            <ul class="dropdown__list" uib-dropdown-menu aria-labelledby="category-dropdown-toggle">
+                                <li class="dropdown-item" ng-repeat="category in categories" ng-click="setCategory(category)" ng-class="{'dropdown-item--active': selectedCategory.label === category.label}"><a href="#">{{category.label}}</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
