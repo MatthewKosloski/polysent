@@ -37,9 +37,22 @@ var paths = {
   },
   unCSS: {
     src: './public/css/style.css',
-    html: ['./src/*.html'],
+    html: [
+      './src/*.html',
+      './src/templates/**/*.html'
+    ],
     dest: './public/css',
-    ignore: []
+    ignore: [
+      '.poll-upvoted',
+      '.search-bar--visible',
+      '.hamburger--x',
+      '.mobile-nav--expand',
+      '.globe--contract',
+      '.auxiliary__location--active',
+      '.auxiliary__sorters--visible',
+      '.icon-circle-check',
+      '.icon-circle-cross'
+    ]
   },
   minifyCSS: {
     src: './public/css/style.css',
@@ -68,20 +81,13 @@ var paths = {
     src: [
       './bower_components/jquery/dist/jquery.js',
       './bower_components/angular/angular.js',
-      // './src/js/vendor/ui-scroll.js',
       './bower_components/lodash/lodash.js',
-      // './bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
       './bower_components/angular-ui-router/release/angular-ui-router.js',
       './bower_components/restangular/dist/restangular.js',
       './bower_components/angular-local-storage/dist/angular-local-storage.js',
-      // './bower_components/angular-bindonce/bindonce.js',
 
       './src/js/vendor/angular-ui/ui-bootstrap-custom-1.0.3.js',
       './src/js/vendor/angular-ui/ui-bootstrap-custom-tpls-1.0.3.js',
-
-      // './src/js/ui/dropdown.js',
-      // './src/js/ui/mobileNav.js',
-      // './src/js/ui/searchBar.js',
 
       './src/js/app.js',
 
@@ -110,6 +116,7 @@ var paths = {
 //---------------------------
 gulp.task('moveTemplates', function(){
   return gulp.src(paths.moveTemplates.src)
+    .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest(paths.moveTemplates.dest));
 });
 
@@ -195,7 +202,10 @@ gulp.task('sassToCSS', function() {
 //---------------------------
 gulp.task('unCSS', ['sassToCSS'], function() {
   return gulp.src(paths.unCSS.src)
-    .pipe(uncss({html:paths.unCSS.html,ignore:paths.unCSS.ignore}))
+    .pipe(uncss({
+      html: paths.unCSS.html,
+      ignore: paths.unCSS.ignore,
+    }))
     .pipe(gulp.dest(paths.unCSS.dest));
 });
 
