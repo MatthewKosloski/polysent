@@ -1,4 +1,4 @@
-.dropdown--purple.dropdown--open {
+.dropdown--purple.open {
 	.dropdown__btn {
 		border-color: $darkPurple;
 		color: $darkPurple;
@@ -37,7 +37,7 @@
 	}
 }
 
-.dropdown--charcoal.dropdown--open {
+.dropdown--charcoal.open {
 	.dropdown__btn {
 		border-color: $charcoal;
 		color: $charcoal;
@@ -84,7 +84,7 @@
 	z-index: 1;
 }
 
-.dropdown--open {
+.dropdown.open {
 	.dropdown__btn {
 		@include border-radius("bottom left", 0);
 		@include border-radius("bottom right", 0);
@@ -121,6 +121,8 @@
 	border-top: none;
 	font-size: rem(15);
 	display: none;
+	max-height: 375px;
+    overflow: auto;
 	li {
 		list-style: none;
 		display: block;
@@ -145,7 +147,7 @@
 	}
 }
 
-.dropdown__list--visible {
+.dropdown.open .dropdown__list {
 	display: block;
 }
 
