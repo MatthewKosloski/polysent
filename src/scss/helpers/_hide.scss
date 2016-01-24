@@ -1,0 +1,5 @@
+.hide-on-small {
+	@include breakpoint(sm) {
+		display: none;
+	}
+}

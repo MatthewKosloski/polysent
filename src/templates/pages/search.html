@@ -3,10 +3,10 @@
         <div class="column large-12 medium-12 small-12">
             <div class="page-header">
                 <div class="row">
-                    <div class="column large-8 medium-8 small-8">
+                    <div class="column large-8 medium-8 small-12">
                         <h2>Results for "{{searchInput}}"</h2>
                     </div>
-                    <div class="column large-4 medium-4 small-4 textalign--right">
+                    <div class="column large-4 medium-4 small-4 textalign--right hide-on-small">
                         <h3 ng-if="queries.length">({{totalQueries}} poll<span ng-if="isPlural(totalQueries)">s</span> found)</h3>
                         <h3 ng-if="!queries.length">(0 polls found)</h3>
                     </div>
