@@ -1,10 +1,30 @@
 (function(){
 	'use strict';
-	angular.module('services')
+	angular
+		.module('services')
 		.factory('classes', [function(){
 			return {
-				pollUpvoted: 'poll-upvoted',
-				searchBarVisible: 'search-bar--visible'
+				poll: {
+					upvoted: 'poll-upvoted'
+				},
+				searchBar: {
+					visible: 'search-bar--visible'
+				},
+				hamburger: {
+					close: 'hamburger--x'
+				},
+				mobileNav: {
+					expand: 'mobile-nav--expand'
+				},
+				globe: {
+					contract: 'globe--contract'
+				},
+				auxiliaryLocation: {
+					active: 'auxiliary__location--active'
+				},
+				auxiliarySorters: {
+					visible: 'auxiliary__sorters--visible'
+				}
 			};
 		}]);
 })();

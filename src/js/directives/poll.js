@@ -28,7 +28,7 @@
 					el = element.find('.poll-upvote');
 			  	el.bind('click', function(e){
 					e.preventDefault();
-					el.addClass(classes.pollUpvoted);
+					el.addClass(classes.poll.upvoted);
 					upvote(scope.data);
 					scope.upvotes++;
 			  	});

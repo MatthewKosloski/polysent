@@ -7,7 +7,7 @@
 				var upvotesArray = localStorage.getArray('upvotes'),
 					id = attributes.checkIfUpvoted;
 				if(upvotesArray.indexOf(id) !== -1) {
-					element.addClass(classes.pollUpvoted);
+					element.addClass(classes.poll.upvoted);
 				}
 			}
 		};

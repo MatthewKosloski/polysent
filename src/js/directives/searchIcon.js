@@ -9,7 +9,7 @@
             link: function(scope, element, attributes) {
                 element.on('click', function(){
                     var searchBarContainer = $('.search-bar-container'),
-                        cls = classes.searchBarVisible;
+                        cls = classes.searchBar.visible;
                     
                     if(searchBarContainer.hasClass(cls)) {
                         element.css({'opacity': 0.75});
