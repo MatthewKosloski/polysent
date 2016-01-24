@@ -59017,43 +59017,36 @@ angular.module("uib/template/pagination/pagination.html", []).run(["$templateCac
 			'$provide', 
 			'RestangularProvider', function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider, $provide, RestangularProvider) {		
 				$stateProvider
-					.state('home', 
-						{
+					.state('home', {
 							url: '/',
 							templateUrl: './templates/pages/home.html',
 							controller: 'HomeCtrl'
 						}
 					)
-					.state('about', 
-						{
+					.state('about', {
 							url: '/about',
 							templateUrl: './templates/pages/about.html',
 							controller: 'AboutCtrl'
 						}
 					)
-					.state('faq', 
-						{
+					.state('faq', {
 							url: '/faq',
-							templateUrl: './templates/pages/faq.html',
-							controller: 'FaqCtrl'
+							templateUrl: './templates/pages/faq.html'
 						}
 					)
-					.state('single', 
-						{
+					.state('single', {
 							url: '/p/:id',
 							templateUrl: './templates/pages/single.html',
 							controller: 'SingleCtrl'
 						}
 					)
-					.state('new', 
-						{
+					.state('new', {
 							url: '/new',
 							templateUrl: './templates/pages/new.html',
 							controller: 'NewCtrl'
 						}
 					)
-					.state('search', 
-						{
+					.state('search', {
 							url: '/search',
 							templateUrl: './templates/pages/search.html',
 							controller: 'SearchCtrl'
@@ -59095,44 +59088,12 @@ angular.module('filters', []);
 	'use strict';
 	angular
 		.module('controllers')
-		.controller('FaqCtrl', ['$scope', '$sce', function($scope, $sce){
-			$scope.renderHtml = function(html) {
-            	return $sce.trustAsHtml(html);
-       		};
-			$scope.faqs = [
-				{
-					question: 'What is Polysent?',
-					answer: 'Polysent is an online poll maker that allows you to instantly obtain anonymously-submitted results with ease.'
-				},
-				{
-					question: 'How many polls can I submit?',
-					answer: 'You can submit as many polls as you desire; however, all submissions are subject to review.'
-				},
-				{
-					question: 'Can I submit a similar poll that already exists?',
-					answer: 'Yes, feel free to submit a poll that has already been added to Polysent.'
-				},
-				{
-					question: 'Can I create a private poll?',
-					answer: 'Yes, you don\'t have to create a public poll that will be added and archieved on the site for everyone to see.  If you desire to create a private poll, just select "Private" on the form when submitting.'
-				},
-				{
-					question: 'I found a bug, how do I contact you?',
-					answer: 'If you discover problems during your experience, feel free to create an issue on the Github <a href="#">repository</a>, send me an <a href="mailto:hi@mtk.me">email</a>, or <a href="http://twitter.com/_mkos">tweet</a> me.'
-				},
-
-			];
-		}]);
-})();
-(function(){
-	'use strict';
-	angular
-		.module('controllers')
 		.controller('HomeCtrl', [
 			'$scope', 
 			'Restangular', 
 			'restangularPoll',
-			'Categories', function($scope, Restangular, restangularPoll, Categories){
+			'Categories',
+			function($scope, Restangular, restangularPoll, Categories){
 
 			$scope.categories = Categories.filterCategories;
 			$scope.selectedCategory = Categories.filterCategories[0];
@@ -59144,7 +59105,7 @@ angular.module('filters', []);
 
 			$scope.currentPollPage = 1;
 			$scope.polls_per_page = 24;
-			$scope.maxAmountOfPolls = 5;
+			$scope.maxAmountOfPolls = 3;
 
 			/*
 				Function called by auxiliary tabs (featured, newest, most votes, etc.).
@@ -59176,9 +59137,12 @@ angular.module('filters', []);
 				restangularPoll.one(type).get({page: $scope.currentPollPage, per_page: $scope.polls_per_page}).then(function(response) {
 					$scope.polls = response.data.docs;
 					$scope.totalPolls = response.data.total;
-					// console.log(response);
 					$scope.busyLoading = false;
 				});
+			};
+
+			$scope.setCategory = function(category) {
+				$scope.selectedCategory = category;
 			};
 
 			$scope.loadPollsByType($scope.postType);
@@ -59197,12 +59161,19 @@ angular.module('filters', []);
 			'restangularPoll',
 			'Query', function($scope, $location, Restangular, localStorage, Categories, restangularPoll, Query){
 
-
-			/*
-				Put all globally utilized functions/values in here,
-				so they can be inherited from this parent scope.
-			*/
-
+			$scope.modal = {};
+			$scope.$on('modal', function(event, args) { 
+				$scope.modal.show = args.show;
+				$scope.modal.width = args.width;
+				$scope.modal.height = args.height;
+				$scope.modal.iconClass = args.iconClass;
+				$scope.modal.heading = args.heading;
+				$scope.modal.subHeading = args.subHeading;
+				$scope.modal.buttonText = args.buttonText;
+				$scope.modal.buttonAction = args.buttonAction;
+				$scope.modal.animationClasses = args.animationClasses;
+			});
+				
 			if(localStorage.getItem('upvotes') === null) {
 				localStorage.pushArrayItem('upvotes', 0);
 			} 
@@ -59290,15 +59261,52 @@ angular.module('filters', []);
 				counter++;
 			};
 
+			var defaultForm = {
+				category: '',
+				options: [],
+				question: ''
+			};
+
+			$scope.resetForm = function(){
+				$scope.newPoll = angular.copy(defaultForm);
+				$scope.options = ['options 1', 'option 2'];
+			};
+
 			$scope.addPoll = function(){
-				$scope.newPoll.category = $scope.newPoll.category.label;
+				$scope.loading = true;
 				Restangular.one('api').post('new', $scope.newPoll).then(function(response) {
 				    if(response.status === 200) {
-				    	$scope.message = 'Poll has been submitted!';
-				    	$location.path('/p/' + response.data._id);
+				    	$scope.$emit('modal', {
+							show: true,
+							width: 480,
+							height: 330,
+							iconClass: 'icon-circle-check',
+							heading: 'Success!',
+							subHeading: 'Your poll has been submitted.',
+							buttonText: 'continue to poll',
+							animationClasses: ['modal__content--visible', 'modal__content--hidden'],
+							buttonAction: function(){
+								var path = '/p/' + response.data._id;
+								$location.path(path);
+							}
+						});
+						$scope.resetForm();
+						$scope.loading = false;
 				    }
 				}, function(error){
-					console.log(error);
+						$scope.$emit('modal', {
+							show: true,
+							width: 480,
+							height: 330,
+							iconClass: 'icon-circle-cross',
+							heading: (error.statusText) ?  error.statusText : 'Oh no!',
+							subHeading: (error.data.message) ? error.data.message : 'An error occurred while saving the poll.',
+							buttonText: 'try again',
+							animationClasses: ['modal__content--visible', 'modal__content--hidden'],
+							buttonAction: function(){
+								console.log('trying again...');
+							}
+						});
 				});
 			};
 
@@ -59391,55 +59399,78 @@ angular.module('filters', []);
 })();
 (function(){
 	'use strict';
-	angular.module('services')
-	.factory('Categories', [function(){
+	angular
+		.module('services')
+		.factory('Categories', [function(){
 
-		var arr = [
-			'all categories', 
-			'controversial', 
-			'current events', 
-			'entertainment', 
-			'leisure', 
-			'people',
-			'personal',
-			'politics',
-			'random',
-			'science',
-			'sports',
-			'technology',
-			'uncategorized'
-		];
+			var arr = [
+				'all categories', 
+				'controversial', 
+				'current events', 
+				'entertainment', 
+				'leisure', 
+				'people',
+				'personal',
+				'politics',
+				'random',
+				'science',
+				'sports',
+				'technology',
+				'uncategorized'
+			];
 
-		var filterCategories = [];
-		for(var i = 0; i < arr.length; i++) {
-			filterCategories.push({label: arr[i]});
-		}
+			var filterCategories = [];
+			for(var i = 0; i < arr.length; i++) {
+				filterCategories.push({label: arr[i]});
+			}
 
-		arr.shift();
-		var newPollCategories = [];
-		for(var j = 0; j < arr.length; j++) {
-			newPollCategories.push({label: arr[j]});
-		}
+			arr.shift();
+			// arr.unshift('choose a category');
+			var newPollCategories = [];
+			for(var j = 0; j < arr.length; j++) {
+				newPollCategories.push({label: arr[j]});
+			}
 
-		return {
-			filterCategories: filterCategories,
-			newPollCategories: newPollCategories
-		};
-	}]);
-})();
-(function(){
-	'use strict';
-	angular.module('services')
-		.factory('classes', [function(){
 			return {
-				pollUpvoted: 'poll-upvoted',
-				searchBarVisible: 'search-bar--visible'
+				filterCategories: filterCategories,
+				newPollCategories: newPollCategories
 			};
 		}]);
 })();
 (function(){
 	'use strict';
-	angular.module('services')
+	angular
+		.module('services')
+		.factory('classes', [function(){
+			return {
+				poll: {
+					upvoted: 'poll-upvoted'
+				},
+				searchBar: {
+					visible: 'search-bar--visible'
+				},
+				hamburger: {
+					close: 'hamburger--x'
+				},
+				mobileNav: {
+					expand: 'mobile-nav--expand'
+				},
+				globe: {
+					contract: 'globe--contract'
+				},
+				auxiliaryLocation: {
+					active: 'auxiliary__location--active'
+				},
+				auxiliarySorters: {
+					visible: 'auxiliary__sorters--visible'
+				}
+			};
+		}]);
+})();
+(function(){
+	'use strict';
+	angular
+		.module('services')
 		.factory('localStorage', ['localStorageService', function(localStorageService){
 		
 			var factory = {};
@@ -59495,58 +59526,32 @@ angular.module('filters', []);
 				existingArray.unshift(arrayItem);
 				factory.setItem(arrayName,JSON.stringify(existingArray));
 			};
-
 			return factory;
-
 		}]);
 })();
 (function(){
 	'use strict';
-	angular.module('services')
-	.factory('Query', ['restangularPoll', function(restangularPoll){
+	angular
+		.module('services')
+		.factory('Query', ['restangularPoll', function(restangularPoll){
 
-		var factory = {};
+			var factory = {};
 
-		factory.get = function(query, page, perPage){
-			return restangularPoll.one('search').get({q: query, page: page, per_page: perPage});
-		};
-	
-		return factory;
-	}]);
+			factory.get = function(query, page, perPage){
+				return restangularPoll.one('search').get({q: query, page: page, per_page: perPage});
+			};
+		
+			return factory;
+		}]);
 })();
 (function(){
 	'use strict';
-	angular.module('services')
+	angular
+		.module('services')
 		.factory('restangularPoll', ['Restangular', function(Restangular){
 			return Restangular.all('api');
 		}]);
 })();
-(function(){
-    'use strict';
-    angular.module('directives')
-    .directive('categoryValidation', function() {
-        return {
-            require: 'ngModel',
-            link: function(scope, element, attributes, controller) {
-                controller.$validators.category = function(modelValue, viewValue) {
-                    if (controller.$isEmpty(modelValue)) {
-                      // consider empty models to be valid
-                      return true;
-                    }
-
-                    if (viewValue !== 'select a category') {
-                      // it is valid
-                      return true;
-                    }
-
-                    // it is invalid
-                    return false;
-                };
-            }
-        };
-    });
-})();
-
 (function(){
 	'use strict';
 	angular.module('directives')
@@ -59556,38 +59561,90 @@ angular.module('filters', []);
 				var upvotesArray = localStorage.getArray('upvotes'),
 					id = attributes.checkIfUpvoted;
 				if(upvotesArray.indexOf(id) !== -1) {
-					element.addClass(classes.pollUpvoted);
+					element.addClass(classes.poll.upvoted);
 				}
 			}
 		};
 	}]);
 })();
 (function(){
-    'use strict';
-    angular.module('directives')
-    .directive('categoryValidation', function() {
-        return {
-            require: 'ngModel',
-            link: function(scope, element, attributes, controller) {
-                controller.$validators.category = function(modelValue, viewValue) {
-                    if (controller.$isEmpty(modelValue)) {
-                      // consider empty models to be valid
-                      return true;
-                    }
+	'use strict';
+	angular
+		.module('directives')
+		.directive('mobileAuxiliaryTrigger', ['classes', function(classes) {
+			return {
+				restrict: 'A',
+				link: function(scope, element, attr, Ctrl) {
+					var auxiliaryLocation = $('.auxiliary__location'),
+						auxiliarySorters = $('.auxiliary__sorters');
 
-                    if (viewValue !== 'choose a category') {
-                      // it is valid
-                      return true;
-                    }
-
-                    // it is invalid
-                    return false;
-                };
-            }
-        };
-    });
+					element.bind('click', function(){
+						auxiliaryLocation.toggleClass(classes.auxiliaryLocation.active);
+						auxiliarySorters.toggleClass(classes.auxiliarySorters.visible);
+					});
+				}
+			};
+		}]);
 })();
+(function(){
+	'use strict';
+	angular
+		.module('directives')
+		.directive('mobileNavTrigger', ['classes', function(classes) {
+			return {
+				restrict: 'A',
+				link: function(scope, element, attr, Ctrl) {
+					var nav = $('.mobile-nav'),
+						hamburger = $('.hamburger'),
+			      		globe = $('.globe');
 
+					element.bind('click', function(){
+						hamburger.toggleClass(classes.hamburger.close);
+						nav.toggleClass(classes.mobileNav.expand);
+						globe.toggleClass(classes.globe.contract);
+					});
+				}
+			};
+		}]);
+})();
+(function(){
+	'use strict';
+	angular
+		.module('directives')
+		.directive('modal', [function() {
+			return {
+				restrict: 'E',
+				replace: true,
+				templateUrl: 'templates/directives/modal.html',
+				scope: {
+					show: '=',
+					width: '=',
+					height: '=',
+					iconClass: '=',
+					heading: '=',
+					subHeading: '=',
+					buttonText: '=',
+					animationClasses: '=',
+					buttonAction: '&'
+				},
+				link: function(scope, element, attr, Ctrl) {
+
+					var cta = element.find('.modal__cta'),
+			      		modalContent = element.find('.modal__content');
+
+					scope.hideModal = function(){
+						scope.show = false;
+			      	};
+
+			      	cta.bind('click', function(){
+			      		var buttonAction = scope.buttonAction();
+			      		buttonAction();
+			      		scope.hideModal();
+			      	});
+				}
+			};
+		}]);
+})();
 (function(){
     'use strict';
     angular.module('directives')
@@ -59633,7 +59690,7 @@ angular.module('filters', []);
 					el = element.find('.poll-upvote');
 			  	el.bind('click', function(e){
 					e.preventDefault();
-					el.addClass(classes.pollUpvoted);
+					el.addClass(classes.poll.upvoted);
 					upvote(scope.data);
 					scope.upvotes++;
 			  	});
@@ -59652,7 +59709,7 @@ angular.module('filters', []);
             link: function(scope, element, attributes) {
                 element.on('click', function(){
                     var searchBarContainer = $('.search-bar-container'),
-                        cls = classes.searchBarVisible;
+                        cls = classes.searchBar.visible;
                     
                     if(searchBarContainer.hasClass(cls)) {
                         element.css({'opacity': 0.75});
@@ -59668,16 +59725,15 @@ angular.module('filters', []);
 })();
 (function(){
     'use strict';
-    angular.module('directives')
-    .directive('stat', function() {
-        return {
-            restrict: 'E',
-            replace: true,
-            templateUrl: 'templates/directives/stat.html',
-            scope: {
-                number: '@',
-                title: '@'
-            }
-        };
-    });
+    angular
+        .module('filters')
+        .filter('unslugify', [function() {
+            return function(str, chars) {
+                var arr = str.split(new RegExp('['+chars+']'));
+                for(var i = 0; i < arr.length; i++) {
+                    arr[i] = arr[i].replace(arr[i].slice(0, 1), arr[i].slice(0, 1).toUpperCase());
+                }
+                return arr.join(' ');
+            };
+        }]);
 })();

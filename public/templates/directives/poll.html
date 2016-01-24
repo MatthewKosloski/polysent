@@ -1,16 +1,1 @@
-<div>
-	<a ng-href="/p/{{id}}">
-		<div class="poll">
-			<div class="poll-upvote" check-if-upvoted="{{id}}">
-				<span class="poll-upvote__shape"></span>
-				<span class="poll-upvote__number">{{upvotes}}</span>
-			</div>
-			<h3 class="poll__title line-clamp-3">{{question}}</h3>
-			<ul class="poll__bars">
-				<li ng-repeat="option in options | limitTo: 7 track by $index" style="background-color:rgba(127,101,183,{{option.alpha}});max-height:{{option.percentage}}%;">
-					<span>{{option.votes}}</span>
-				</li>
-			</ul>
-		</div>
-	</a>
-</div>
+<div><a ng-href="/p/{{id}}"><div class="poll"><div class="poll-upvote" check-if-upvoted="{{id}}"><span class="poll-upvote__shape"></span> <span class="poll-upvote__number">{{upvotes}}</span></div><h3 class="poll__title line-clamp-3">{{question}}</h3><ul class="poll__bars"><li ng-repeat="option in options | limitTo: 7 track by $index" style="background-color:rgba(127,101,183,{{option.alpha}});max-height:{{option.percentage}}%"><span>{{option.votes}}</span></li></ul></div></a></div>
