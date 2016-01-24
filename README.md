@@ -67,4 +67,4 @@ If the server errors, do the first 5 steps again.  Then, after the 5th step:
     $ NODE_ENV=production PORT=80 pm2 start server.js --watch
   ``` 
   
-4. Run the `pm2 list` command at lease two times.  If it doesn't say "errored," all is good! :)
+4. Run the `pm2 list` command at least two times to check for fatal errors.
