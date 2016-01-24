@@ -56,12 +56,15 @@ If the server errors, do the first 5 steps again.  Then, after the 5th step:
   ```sh
     $ pm2 list
   ``` 
+  
 2. Delete the server process and refresh the list.  (process should be removed and the list empty)
   ```sh
     $ pm2 delete server
   ``` 
+  
 3. Now to recreate the process, run this:
   ```sh
     $ NODE_ENV=production PORT=80 pm2 start server.js --watch
   ``` 
+  
 4. Run the `pm2 list` command at lease two times.  If it doesn't say "errored," all is good! :)
