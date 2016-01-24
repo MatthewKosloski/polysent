@@ -1,6 +1,7 @@
 (function(){
 	'use strict';
-	angular.module('services')
+	angular
+		.module('services')
 		.factory('restangularPoll', ['Restangular', function(Restangular){
 			return Restangular.all('api');
 		}]);

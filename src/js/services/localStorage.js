@@ -1,6 +1,7 @@
 (function(){
 	'use strict';
-	angular.module('services')
+	angular
+		.module('services')
 		.factory('localStorage', ['localStorageService', function(localStorageService){
 		
 			var factory = {};
@@ -56,8 +57,6 @@
 				existingArray.unshift(arrayItem);
 				factory.setItem(arrayName,JSON.stringify(existingArray));
 			};
-
 			return factory;
-
 		}]);
 })();
