@@ -41,7 +41,7 @@
 
 .modal__content {
     @include transition(all 0.5s cubic-bezier(0.770, 0.000, 0.175, 1.000));
-    @include transform(scale3d(.3, .3, .3)translate(-50%,-50%));
+    @include transform(scale(0.3) translate(-50%,-50%));
     @include transform-origin(0 0);
     @include border-radius('all', 4px);
     position: absolute;
@@ -55,13 +55,13 @@
 }
 
 .modal__content--visible {
-    @include transform(scale3d(1, 1, 1)translate(-50%,-50%));
+    @include transform(scale(1) translate(-50%,-50%));
     z-index: 10000;
     opacity: 1;
 }
 
 .modal__content--hidden {
-    @include transform(scale3d(.3, .3, .3)translate(-50%,-50%));
+    @include transform(scale(0.3) translate(-50%,-50%));
     z-index: -10000;
     opacity: 0;
 }
