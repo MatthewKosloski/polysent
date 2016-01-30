@@ -41,7 +41,6 @@
                 button-action="modal.buttonAction" 
                 animation-classes="modal.animationClasses">
             </modal>
-
             <header class="top-header">
                 <div class="row top-header-row">
                     <div class="column large-5 medium-7 small-8 top-header__left">
@@ -61,8 +60,8 @@
                 </div>
             </header>
 
-            <form class="search-bar-container" ng-submit="query()" ng-class="{'search-bar--visible': isActive('/search')}">
-                <input class="search-bar" type="text" placeholder="Search for a poll..." ng-model="searchInput" autofocus>
+            <form class="search-bar-container" ng-submit="sendQuery()" ng-hide="isActive('/search')">
+                <input type="text" class="search-bar" ng-model="searchInput" placeholder="Search for a poll..." autofocus>
             </form>
 
             <ui-view></ui-view>

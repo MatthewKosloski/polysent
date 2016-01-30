@@ -1,3 +1,7 @@
+<form class="search-bar-container search-bar--visible" ng-submit="query()">
+    <input type="text" class="search-bar" ng-model="searchInput" placeholder="Search for a poll..." autofocus>
+</form>
+
 <div class="main main--home">
     <div class="row">
         <div class="column large-12 medium-12 small-12">
@@ -30,9 +34,18 @@
             <div class="bounce3"></div>
         </div>
     </div>
-    <div class="row" ng-if="!busyLoading && queries.length">
+    <div class="row" ng-show="!busyLoading && queries.length">
         <div class="large-12 medium-12 small-12">
-            <uib-pagination previous-text="Prev" total-items="totalQueries" items-per-page="queries_per_page" ng-model="currentQueryPage" max-size="maxAmountOfQueries" boundary-link-numbers="true" rotate="false" ng-change="changePage()"></uib-pagination>
+            <uib-pagination 
+                previous-text="Prev" 
+                total-items="totalQueries" 
+                items-per-page="queries_per_page" 
+                ng-model="currentQueryPage" 
+                max-size="maxAmountOfQueries" 
+                boundary-link-numbers="true" 
+                rotate="false" 
+                ng-change="query('pagination')">
+            </uib-pagination>
         </div>
     </div>
 </div>
