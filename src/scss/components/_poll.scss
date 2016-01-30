@@ -8,25 +8,7 @@
 }
 
 .poll-column {
-	$poll-margin-bottom: 70px;
-	margin-bottom: $poll-margin-bottom;
-	// &:nth-last-child(1),
-	// &:nth-last-child(2) {
-	// 	margin-bottom: 0;
-	// 	@include breakpoint(xs) {
-	// 		margin-bottom: $poll-margin-bottom;
-	// 	}
-	// 	@include breakpoint(sm) {
-	// 		margin-bottom: $poll-margin-bottom;
-	// 	}
-	// }
-	// &:nth-last-child(3),
-	// &:nth-last-child(4) {
-	// 	margin-bottom: 0;
-	// 	@include breakpoint(lg) {
-	// 		margin-bottom: $poll-margin-bottom;
-	// 	}
-	// }
+	margin-bottom: 70px;
 	a {
 		text-decoration: none;
 	}
@@ -34,9 +16,11 @@
 
 .poll {
 	@include animation(fadeIn 0.25s ease-in-out 0.25s both);
+	@include border-radius("all", 4px);
 	@include display(flex);
 	@include flex-direction(column);
-	@include border-radius("all", 4px);
+	@include justify-content(space-between);
+	align-items: center;
 	background-color: $grayBorder; 
 	height: 275px;
 	text-align: center;
@@ -46,41 +30,43 @@
 
 .poll-upvote {
 	@include animation(fadeIn 0.25s ease-in-out 0.75s both);
-	@include order(1);
-	@include flex(0.33);
 	color: $black;
 	font-weight: 700;
 	font-size: rem(14);
 	&:hover {
-		.poll-upvote__shape {
-			@include transform(translateY(-2px));
+		.poll-upvote__number {
+			&::before {
+				@include transform(translateY(-2px));
+			}
 		}
 	}
 }
 
-.poll-upvote__shape {
-	@include transition(all 0.15s ease-in-out);
-	width: 0;
-	height: 0;
-	border-style: solid;
-	border-width: 0 5px 9px 5px;
-	border-color: transparent transparent $black transparent;
-	display: block;
-	margin: 0 auto;
+.poll-upvote__number {
+	&::before {
+		@include transition(all 0.15s ease-in-out);
+		content: '';
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 5px 9px 5px;
+		border-color: transparent transparent $black transparent;
+		display: block;
+		margin: 0 auto;
+	}
 }
 
 .poll-upvoted {
-	.poll-upvote__shape {
-		border-color: transparent transparent $purple transparent;
-	}
 	.poll-upvote__number {
 		color: $purple;
+		&::before {
+			border-color: transparent transparent $purple transparent;
+		}
 	}
 }
 
 .poll__title {
 	@include animation(fadeIn 0.25s ease-in-out 0.50s both);
-	@include order(2);
 	font-size: rem(16);
 	font-weight: 600;
 	color: $black;
@@ -89,27 +75,25 @@
 
 .poll__bars {
 	@include display(flex);
-	@include flex(1);
-	@include order(3);
 	@include align-items(flex-end);
-	@include justify-content(center);
-	margin-left: 0;
+	padding: 0;
+	margin: 0;
+	list-style: none;
 	height: 120px;
 	li {
 		@include breakpoint(sm) {
-			width: 20px;
+			min-width: rem(20);
 		}
-		@include display(flex);
-    	@include align-items(flex-end);
-    	@include justify-content(center);
     	@include animation(heightAnimation 0.5s cubic-bezier(0.895, 0.030, 0.685, 0.220) 1s both);
-		list-style: none;
-		display: inline-block;
-		height: 0;
+		@include display(flex);
+		@include align-items(flex-end);
+		@include justify-content(center);
 		min-width: rem(40);
+		height: 0;
+		margin-right: 5px;
+		font-size: rem(16);
 		color: $darkerPurple;
 		cursor: pointer;
-		font-size: rem(16);
 		span {
 			@include transition(all 0.25s ease-in-out);
 			@include transform(translate(-50%, 0));
