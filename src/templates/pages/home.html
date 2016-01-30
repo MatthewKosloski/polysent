@@ -52,7 +52,16 @@
     </div>
     <div class="row" ng-show="!busyLoading">
         <div class="large-12 medium-12 small-12">
-            <uib-pagination previous-text="Prev" total-items="totalPolls" items-per-page="polls_per_page" ng-model="currentPollPage" max-size="maxAmountOfPolls" boundary-link-numbers="true" rotate="false" ng-change="loadPollsByType(postType)"></uib-pagination>
+            <uib-pagination 
+                previous-text="Prev" 
+                total-items="totalPolls" 
+                items-per-page="polls_per_page" 
+                ng-model="currentPollPage" 
+                max-size="maxAmountOfPolls" 
+                boundary-link-numbers="true" 
+                rotate="false" 
+                ng-change="loadPollsByType(postType)">
+            </uib-pagination>
         </div>
     </div>
 </div>
