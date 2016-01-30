@@ -32,11 +32,20 @@
 	}
 }
 
-.form-error {
-	text-align: right;
-	margin: 0;
-	font-size: rem(13);
-	color: $red;
+.option {
+	@include transition(opacity 0.33s linear);
+}
+
+.option--hidden {
+	position: absolute;
+	top: -999px;
+	opacity: 0;
+}
+
+.option--visible {
+	position: relative;
+	top: 0;
+	opacity: 1;
 }
 
 .submit-poll__add {

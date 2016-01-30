@@ -11,11 +11,11 @@
                         </div>
                     </div>
                 </fieldset>
-                <fieldset ng-repeat="option in options track by $index">
+                <fieldset class="option" ng-repeat="option in options track by $index" ng-class="option.hide ? 'option--hidden' : 'option--visible'">
                     <div class="row">
                         <div class="column large-12 medium-12 small-12">
                             <label class="block-label" for="option-{{$index + 1}}">option {{$index + 1}}</label>
-                            <input type="text" name="option-{{$index + 1}}" id="option-{{$index + 1}}" ng-model="newPoll.options[$index].title" required>
+                            <input type="text" name="option-{{$index + 1}}" id="option-{{$index + 1}}" ng-model="newPoll.options[$index].title" ng-required="option.hide ? false : true">
                         </div>
                     </div>
                 </fieldset>
