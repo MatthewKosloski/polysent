@@ -79,11 +79,8 @@ var paths = {
   },
   js: {
     src: [
-      './bower_components/jquery/dist/jquery.js',
       './bower_components/angular/angular.js',
-      './bower_components/lodash/lodash.js',
       './bower_components/angular-ui-router/release/angular-ui-router.js',
-      './bower_components/restangular/dist/restangular.js',
       './bower_components/angular-local-storage/dist/angular-local-storage.js',
 
       './src/js/vendor/angular-ui/ui-bootstrap-custom-1.0.3.js',

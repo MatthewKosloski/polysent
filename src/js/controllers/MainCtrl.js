@@ -4,24 +4,15 @@
 		.module('controllers')
 		.controller('MainCtrl', [
 			'$scope', 
-			'$location', 
-			'Restangular',
+			'$location',
 			'localStorage',
 			'Categories',
-			'restangularPoll',
-			'Query', function($scope, $location, Restangular, localStorage, Categories, restangularPoll, Query){
+			'polysentApi', 
+			function($scope, $location, localStorage, Categories, polysentApi){
 
 			$scope.modal = {};
-			$scope.$on('modal', function(event, args) { 
-				$scope.modal.show = args.show;
-				$scope.modal.width = args.width;
-				$scope.modal.height = args.height;
-				$scope.modal.iconClass = args.iconClass;
-				$scope.modal.heading = args.heading;
-				$scope.modal.subHeading = args.subHeading;
-				$scope.modal.buttonText = args.buttonText;
-				$scope.modal.buttonAction = args.buttonAction;
-				$scope.modal.animationClasses = args.animationClasses;
+			$scope.$on('modal', function(event, data) { 
+				$scope.modal = data;
 			});
 				
 			if(localStorage.getItem('upvotes') === null) {
@@ -55,34 +46,34 @@
 			$scope.upvote = function(poll) {
 				var pollId = poll._id;
 				if(upvotes.indexOf(pollId) === -1) {
-					upvotes.push(pollId);
-					localStorage.pushArrayItem('upvotes', pollId);
-					restangularPoll.one('poll').one(pollId.toString(), 'upvote').put();
+					polysentApi.upvote(pollId).then(function(){
+						upvotes.push(pollId);
+						localStorage.pushArrayItem('upvotes', pollId);
+					}, function(error){
+						$scope.$emit('modal', {
+							show: true,
+							width: '480px',
+							height: '330px',
+							iconClass: 'icon-circle-cross',
+							heading: (error.statusText) ?  error.statusText : 'Oh no!',
+							subHeading: (error.data.message) ? error.data.message : 'An error occurred while upvoting the poll.',
+							buttonText: 'close',
+							animationClasses: ['modal__content--visible', 'modal__content--hidden'],
+							buttonAction: function(){
+								console.log('modal closed');
+							}
+						});
+					});
 				}
 			};
 
-			$scope.queries = [];
-			$scope.busyLoading = false;
-
-			$scope.currentQueryPage = 1;
-			$scope.queries_per_page = 24;
-			$scope.maxAmountOfQueries = 5;
-
-			// called on search form submission
-			$scope.query = function(){
-				if($scope.searchInput.length === 0 || $scope.busyLoading) return;
-				$scope.currentQueryPage = 1;
-				$scope.busyLoading = true;
-				$scope.queries = [];
+			$scope.sendQuery = function(){
 				$location.path('/search');
-				Query.get($scope.searchInput, $scope.currentQueryPage, $scope.queries_per_page).then(function(response){
-					$scope.queries = response.data.docs;
-					$scope.totalQueries = response.data.total;
-					$scope.busyLoading = false;
-				}, function(error){
-					console.log(error);
+				$scope.$on('queryFn', function(event, query){
+					query();
 				});
 			};
+
 		}]
 	);
 })();

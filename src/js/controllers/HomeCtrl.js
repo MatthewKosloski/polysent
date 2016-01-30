@@ -4,10 +4,9 @@
 		.module('controllers')
 		.controller('HomeCtrl', [
 			'$scope', 
-			'Restangular', 
-			'restangularPoll',
 			'Categories',
-			function($scope, Restangular, restangularPoll, Categories){
+			'polysentApi',
+			function($scope, Categories, polysentApi){
 
 			$scope.categories = Categories.filterCategories;
 			$scope.selectedCategory = Categories.filterCategories[0];
@@ -48,10 +47,25 @@
 				if($scope.busyLoading) return;
 				$scope.busyLoading = true;
 				$scope.polls = [];
-				restangularPoll.one(type).get({page: $scope.currentPollPage, per_page: $scope.polls_per_page}).then(function(response) {
+				polysentApi.getPollsByType(type, $scope.currentPollPage, $scope.polls_per_page).then(function(response){
 					$scope.polls = response.data.docs;
 					$scope.totalPolls = response.data.total;
 					$scope.busyLoading = false;
+				}, function(error){
+					$scope.$emit('modal', {
+						show: true,
+						width: '480px',
+						height: '330px',
+						iconClass: 'icon-circle-cross',
+						heading: (error.statusText) ?  error.statusText : 'Oh no!',
+						subHeading: (error.data.message) ? error.data.message : 'An error occurred while retrieving the polls.',
+						buttonText: 'close',
+						animationClasses: ['modal__content--visible', 'modal__content--hidden'],
+						buttonAction: function(){
+							$scope.busyLoading = false;
+							$scope.$apply();
+						}
+					});
 				});
 			};
 

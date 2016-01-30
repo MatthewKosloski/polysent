@@ -5,19 +5,18 @@
 		.controller('SingleCtrl', [
 			'$scope', 
 			'$stateParams', 
-			'Restangular', 
 			'localStorage',
-			'restangularPoll',
-			'$location', function($scope, $stateParams, Restangular, localStorage, restangularPoll, $location){
+			'$location',
+			'polysentApi', function($scope, $stateParams, localStorage, $location, polysentApi){
 
 			$scope.single = [];
 			$scope.related = [];
 
 			// get the requested poll
-			restangularPoll.one('poll', $stateParams.id.toString()).get().then(function(response) {
+			polysentApi.single($stateParams.id).then(function(response) {
 				$scope.single = response.data[0];
 				// get the related polls (4)
-				restangularPoll.one('random', $scope.single.category).get().then(function(response) {
+				polysentApi.random($scope.single.category).then(function(response) {
 					$scope.related = $scope.related.concat(response.data);
 				});
 			}, function(error){
@@ -53,7 +52,23 @@
 					$scope.single.options[changes[0]].votes--;
 					$scope.single.options[changes[1]].votes++;
 				}
-				restangularPoll.one('poll').one(pollId.toString(), 'vote').put({decrement: changes[0], increment: changes[1]});
+				polysentApi.vote(pollId, changes[0], changes[1]).then(function(){
+
+				}, function(error){
+					$scope.$emit('modal', {
+						show: true,
+						width: '480px',
+						height: '330px',
+						iconClass: 'icon-circle-cross',
+						heading: (error.statusText) ?  error.statusText : 'Oh no!',
+						subHeading: (error.data.message) ? error.data.message : 'An error occurred while submitting your vote.',
+						buttonText: 'close',
+						animationClasses: ['modal__content--visible', 'modal__content--hidden'],
+						buttonAction: function(){
+							console.log('close modal');
+						}
+					});
+				});
 			};
 
 			$scope.isVoted = function(pollId, index){

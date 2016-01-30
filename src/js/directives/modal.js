@@ -2,7 +2,7 @@
 	'use strict';
 	angular
 		.module('directives')
-		.directive('modal', [function() {
+		.directive('modal', ['$document', function($document) {
 			return {
 				restrict: 'E',
 				replace: true,
@@ -20,17 +20,14 @@
 				},
 				link: function(scope, element, attr, Ctrl) {
 
-					var cta = element.find('.modal__cta'),
-			      		modalContent = element.find('.modal__content');
-
 					scope.hideModal = function(){
 						scope.show = false;
 			      	};
 
+					var cta = angular.element($document[0].querySelector('.modal__cta'));
 			      	cta.bind('click', function(){
 			      		var buttonAction = scope.buttonAction();
 			      		buttonAction();
-			      		scope.hideModal();
 			      	});
 				}
 			};

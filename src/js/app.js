@@ -7,7 +7,6 @@
 			'directives', 
 			'filters', 
 			'ui.router', 
-			'restangular', 
 			'LocalStorageModule',
 			'ui.bootstrap'
 		])
@@ -16,8 +15,8 @@
 			'$urlRouterProvider', 
 			'$locationProvider',
 			'localStorageServiceProvider',
-			'$provide', 
-			'RestangularProvider', function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider, $provide, RestangularProvider) {		
+			'$provide',
+			function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider, $provide) {		
 				$stateProvider
 					.state('home', {
 							url: '/',
@@ -27,8 +26,7 @@
 					)
 					.state('about', {
 							url: '/about',
-							templateUrl: './templates/pages/about.html',
-							controller: 'AboutCtrl'
+							templateUrl: './templates/pages/about.html'						
 						}
 					)
 					.state('faq', {
@@ -68,9 +66,6 @@
 			    	directive.templateUrl = './templates/angular-ui/paginationOverride.tpl.html';
 			    	return $delegate;
 			    }]);
-
-	        	// include response headers for all responses
-	        	RestangularProvider.setFullResponse(true);
 			}
 		]);
 })();
