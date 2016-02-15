@@ -17,7 +17,8 @@
 				display 2 options as default and have 1 
 				option ready to fade in on request.
 			*/
-			$scope.options = [
+
+			var defaultOptions = [
 				{
 					name: 'option 1',
 					hide: false
@@ -31,6 +32,8 @@
 					hide: true
 				}, 
 			];
+
+			$scope.options = angular.copy(defaultOptions);
 
 			$scope.addOption = function(){
 				var len = $scope.options.length;
@@ -48,7 +51,7 @@
 
 			$scope.resetForm = function(){
 				$scope.newPoll = angular.copy(defaultForm);
-				$scope.options = ['options 1', 'option 2'];
+				$scope.options = angular.copy(defaultOptions);
 			};
 
 			$scope.addPoll = function(){
