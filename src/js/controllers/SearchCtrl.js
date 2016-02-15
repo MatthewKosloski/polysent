@@ -21,7 +21,7 @@
 				}
 				$scope.queries = [];
 				$location.path('/search');
-				polysentApi.search($scope.searchInput, $scope.currentQueryPage, $scope.queries_per_page).then(function(response){
+				polysentApi.search($scope.searchInput.query, $scope.currentQueryPage, $scope.queries_per_page).then(function(response){
 					$scope.queries = response.data.docs;
 					$scope.totalQueries = response.data.total;
 					$scope.busyLoading = false;

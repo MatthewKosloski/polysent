@@ -10,6 +10,7 @@
 			'polysentApi', 
 			function($scope, $location, localStorage, Categories, polysentApi){
 
+			$scope.searchInput = {};
 			$scope.modal = {};
 			$scope.$on('modal', function(event, data) { 
 				$scope.modal = data;
