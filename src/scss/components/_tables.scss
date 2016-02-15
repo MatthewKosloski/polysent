@@ -1,0 +1,50 @@
+.flex-table {
+	margin-bottom: 25px;
+	ul {
+		margin-left: 0;
+	}
+}
+
+
+.flex-table__head,
+.body__row {
+	border-bottom: 1px solid $grayBorder;
+	font-size: rem(14);
+	padding: 12px;
+}
+
+.body__row {
+	&:hover {
+		background-color: rgba(127,101,183,0.05);
+	}
+}
+
+.flex-table__head {
+	border-width: 2px;
+	font-weight: 700;
+}
+
+.flex-table__item {
+	text-decoration: none;
+	color: $gray;
+}
+
+.flex-table__head,
+.flex-table__body ul {
+	@include display(flex);
+}
+
+.body__row ul li,
+.flex-table__head li {
+	@include flex(1);
+}
+
+.body__row ul li:nth-child(2),
+.flex-table__head li:nth-child(2),{
+	@include flex(3.5);
+}
+
+.body__row ul li:nth-child(3),
+.flex-table__head li:nth-child(3) {
+	@include flex(1.5);
+}
