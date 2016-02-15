@@ -13,19 +13,34 @@
 			$scope.related = [];
 
 			// get the requested poll
-			polysentApi.single($stateParams.id).then(function(response) {
-				$scope.single = response.data[0];
-				// get the related polls (4)
-				polysentApi.random($scope.single.category).then(function(response) {
-					$scope.related = $scope.related.concat(response.data);
+			if($stateParams.id) {
+				polysentApi.single($stateParams.id).then(function(response) {
+					$scope.single = response.data[0];
+					// get the related polls (4)
+					polysentApi.random($scope.single.category).then(function(response) {
+						$scope.related = $scope.related.concat(response.data);
+					});
+				}, function(error){
+					if(error.status === 404) {
+						$location.path('/');
+						return;
+					}
 				});
-			}, function(error){
-				if(error.status === 404) {
-					$location.path('/');
-					return;
-				}
-			});
-
+			} else if($location.path() === '/random'){
+				polysentApi.randomPoll().then(function(response) {
+					$scope.single = response.data[0];
+					// get the related polls (4)
+					polysentApi.random($scope.single.category).then(function(response) {
+						$scope.related = $scope.related.concat(response.data);
+					});
+				}, function(error){
+					if(error.status === 404) {
+						$location.path('/');
+						return;
+					}
+				});
+			}
+			
 			$scope.vote = function(pollId, index) {
 				/*
 					Create localstorage array if it doesn't
