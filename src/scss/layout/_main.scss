@@ -8,8 +8,8 @@
 	padding: 60px 0;
 }
 
-.main--home {
+.main--padded {
 	@include breakpoint(sm) {
-		padding: 0;
+		padding: 0 0 60px 0;
 	}
 }

@@ -1,14 +1,14 @@
 <form class="search-bar-container search-bar--visible" ng-submit="query()">
-    <input type="text" class="search-bar" ng-model="searchInput" placeholder="Search for a poll..." autofocus>
+    <input type="text" class="search-bar" ng-model="searchInput.query" placeholder="Search for a poll..." autofocus>
 </form>
 
-<div class="main main--home">
+<div class="main main--padded">
     <div class="row">
         <div class="column large-12 medium-12 small-12">
             <div class="page-header">
                 <div class="row">
                     <div class="column large-8 medium-8 small-12">
-                        <h2>Results for "{{searchInput}}"</h2>
+                        <h2>Results for "{{searchInput.query}}"</h2>
                     </div>
                     <div class="column large-4 medium-4 small-4 textalign--right hide-on-small">
                         <h3 ng-if="queries.length">({{totalQueries}} poll<span ng-if="isPlural(totalQueries)">s</span> found)</h3>
