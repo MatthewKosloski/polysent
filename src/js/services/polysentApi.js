@@ -5,13 +5,14 @@
 		.factory('polysentApi', ['$http', function($http){
 			var factory = {};
 
-			factory.getPollsByType = function(type, page, perPage){
+			factory.getPollsByType = function(type, page, perPage, order){
 				return $http({
 					method: 'GET',
 					url: '/api/' + type,
 					params: {
 						page: page,
-						per_page: perPage
+						per_page: perPage,
+						order: order ? order : 'desc'
 					}
 				});
 			};
@@ -52,10 +53,25 @@
 				});
 			};
 
+			factory.adminSingle = function(id){
+				var pollId = id.toString();
+				return $http({
+					method: 'GET',
+					url: '/api/admin/edit/' + pollId
+				});
+			};
+
 			factory.random = function(category){
 				return $http({
 					method: 'GET',
 					url: '/api/random/' + category
+				});
+			};
+
+			factory.randomPoll = function(){
+				return $http({
+					method: 'GET',
+					url: '/api/random'
 				});
 			};
 
