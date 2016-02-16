@@ -10,7 +10,7 @@
         <div class="row row--550">
             <div class="column large-12 medium-12 small-12">
                 <section class="single-poll__title">
-                    <h3 ng-if="single.totalVotes">{{single.totalVotes}} vote<span ng-if="isPlural(single.totalVotes)">s</span></h3>
+                    <h3>{{single.totalVotes}} <span ng-if="!isPlural(single.totalVotes)">vote</span><span ng-if="isPlural(single.totalVotes)">votes</span></h3>
                     <h2>{{single.question}} <div ng-if="single.private" class="label label--uppercase label--yellow">private</div></h2>
                 </section> 
             </div>
