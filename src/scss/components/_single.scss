@@ -76,7 +76,6 @@
 	font-size: rem(16);
 	color: $purple;
 	margin: 0;
-	// cursor: pointer;
 	overflow: hidden;
 	display: inline-block;
 	max-width: 75%;
@@ -102,7 +101,6 @@
 		width: 100%;
 	}
 	.option-bar__taken {
-		@include transition(width 0.3s ease-in-out);
 		background-color: $purple;
 		position: absolute;
 		bottom: 0;
