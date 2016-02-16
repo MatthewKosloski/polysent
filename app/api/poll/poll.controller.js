@@ -77,7 +77,7 @@ exports.vote = function (req, res) {
 /**
  * GET request --- get 4 random polls from a category
  */
-exports.random = function (req, res) {
+exports.randomCategory = function (req, res) {
     var pollCategory = req.params.category;
         Poll.findRandom({category: pollCategory, private: false}, {}, {limit: 4}, function(err, docs) {
         if (err) {
