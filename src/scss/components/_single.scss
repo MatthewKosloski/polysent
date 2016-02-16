@@ -101,6 +101,7 @@
 		width: 100%;
 	}
 	.option-bar__taken {
+		@include transition(width 0.3s ease-in-out);
 		background-color: $purple;
 		position: absolute;
 		bottom: 0;
