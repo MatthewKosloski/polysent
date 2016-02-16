@@ -53,15 +53,7 @@
 				});
 			};
 
-			factory.adminSingle = function(id){
-				var pollId = id.toString();
-				return $http({
-					method: 'GET',
-					url: '/api/admin/edit/' + pollId
-				});
-			};
-
-			factory.random = function(category){
+			factory.randomCategory = function(category){
 				return $http({
 					method: 'GET',
 					url: '/api/random/' + category

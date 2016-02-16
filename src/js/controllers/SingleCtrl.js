@@ -17,7 +17,7 @@
 				polysentApi.single($stateParams.id).then(function(response) {
 					$scope.single = response.data[0];
 					// get the related polls (4)
-					polysentApi.random($scope.single.category).then(function(response) {
+					polysentApi.randomCategory($scope.single.category).then(function(response) {
 						$scope.related = $scope.related.concat(response.data);
 					});
 				}, function(error){
@@ -30,7 +30,7 @@
 				polysentApi.randomPoll().then(function(response) {
 					$scope.single = response.data[0];
 					// get the related polls (4)
-					polysentApi.random($scope.single.category).then(function(response) {
+					polysentApi.randomCategory($scope.single.category).then(function(response) {
 						$scope.related = $scope.related.concat(response.data);
 					});
 				}, function(error){
