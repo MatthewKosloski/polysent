@@ -36097,39 +36097,87 @@ angular.module("uib/template/pagination/pagination.html", []).run(["$templateCac
 			function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider, $provide) {		
 				$stateProvider
 					.state('home', {
-							url: '/',
-							templateUrl: './templates/pages/home.html',
-							controller: 'HomeCtrl'
-						}
-					)
+				    	url: '/',
+			    		views: {
+			    			'': {
+			    				templateUrl: './templates/layouts/primary.html'
+			    			},
+			    			'@home': {
+			    				templateUrl: './templates/pages/home.html',
+			    				controller: 'HomeCtrl'
+			    			}
+			    		} 
+					})
 					.state('about', {
-							url: '/about',
-							templateUrl: './templates/pages/about.html'						
-						}
-					)
+				    	url: '/about',
+			    		views: {
+			    			'': {
+			    				templateUrl: './templates/layouts/primary.html'
+			    			},
+			    			'@about': {
+			    				templateUrl: './templates/pages/about.html',
+			    			}
+			    		} 
+					})
 					.state('faq', {
-							url: '/faq',
-							templateUrl: './templates/pages/faq.html'
-						}
-					)
+				    	url: '/faq',
+			    		views: {
+			    			'': {
+			    				templateUrl: './templates/layouts/primary.html'
+			    			},
+			    			'@faq': {
+			    				templateUrl: './templates/pages/faq.html',
+			    			}
+			    		} 
+					})
 					.state('single', {
-							url: '/p/:id',
-							templateUrl: './templates/pages/single.html',
-							controller: 'SingleCtrl'
-						}
-					)
+				    	url: '/p/:id',
+			    		views: {
+			    			'': {
+			    				templateUrl: './templates/layouts/primary.html'
+			    			},
+			    			'@single': {
+			    				templateUrl: './templates/pages/single.html',
+			    				controller: 'SingleCtrl'
+			    			}
+			    		} 
+					})
 					.state('new', {
-							url: '/new',
-							templateUrl: './templates/pages/new.html',
-							controller: 'NewCtrl'
-						}
-					)
+				    	url: '/new',
+			    		views: {
+			    			'': {
+			    				templateUrl: './templates/layouts/primary.html'
+			    			},
+			    			'@new': {
+			    				templateUrl: './templates/pages/new.html',
+			    				controller: 'NewCtrl'
+			    			}
+			    		} 
+					})
 					.state('search', {
-							url: '/search',
-							templateUrl: './templates/pages/search.html',
-							controller: 'SearchCtrl'
-						}
-					);
+				    	url: '/search',
+			    		views: {
+			    			'': {
+			    				templateUrl: './templates/layouts/primary.html'
+			    			},
+			    			'@search': {
+			    				templateUrl: './templates/pages/search.html',
+			    				controller: 'SearchCtrl'
+			    			}
+			    		} 
+					})
+					.state('random', {
+				    	url: '/random',
+			    		views: {
+			    			'': {
+			    				templateUrl: './templates/layouts/primary.html'
+			    			},
+			    			'@random': {
+			    				templateUrl: './templates/pages/single.html',
+			    				controller: 'SingleCtrl'
+			    			}
+			    		} 
+					});
 				$urlRouterProvider.otherwise('/');
 
 				// use the HTML5 History API
@@ -36241,6 +36289,7 @@ angular.module('filters', []);
 			'polysentApi', 
 			function($scope, $location, localStorage, Categories, polysentApi){
 
+			$scope.searchInput = {};
 			$scope.modal = {};
 			$scope.$on('modal', function(event, data) { 
 				$scope.modal = data;
@@ -36327,7 +36376,8 @@ angular.module('filters', []);
 				display 2 options as default and have 1 
 				option ready to fade in on request.
 			*/
-			$scope.options = [
+
+			var defaultOptions = [
 				{
 					name: 'option 1',
 					hide: false
@@ -36341,6 +36391,8 @@ angular.module('filters', []);
 					hide: true
 				}, 
 			];
+
+			$scope.options = angular.copy(defaultOptions);
 
 			$scope.addOption = function(){
 				var len = $scope.options.length;
@@ -36358,11 +36410,10 @@ angular.module('filters', []);
 
 			$scope.resetForm = function(){
 				$scope.newPoll = angular.copy(defaultForm);
-				$scope.options = ['options 1', 'option 2'];
+				$scope.options = angular.copy(defaultOptions);
 			};
 
 			$scope.addPoll = function(){
-				console.log($scope);
 				$scope.loading = true;
 				polysentApi.create($scope.newPoll).then(function(response) {
 				    if(response.status === 200) {
@@ -36425,7 +36476,7 @@ angular.module('filters', []);
 				}
 				$scope.queries = [];
 				$location.path('/search');
-				polysentApi.search($scope.searchInput, $scope.currentQueryPage, $scope.queries_per_page).then(function(response){
+				polysentApi.search($scope.searchInput.query, $scope.currentQueryPage, $scope.queries_per_page).then(function(response){
 					$scope.queries = response.data.docs;
 					$scope.totalQueries = response.data.total;
 					$scope.busyLoading = false;
@@ -36467,19 +36518,34 @@ angular.module('filters', []);
 			$scope.related = [];
 
 			// get the requested poll
-			polysentApi.single($stateParams.id).then(function(response) {
-				$scope.single = response.data[0];
-				// get the related polls (4)
-				polysentApi.random($scope.single.category).then(function(response) {
-					$scope.related = $scope.related.concat(response.data);
+			if($stateParams.id) {
+				polysentApi.single($stateParams.id).then(function(response) {
+					$scope.single = response.data[0];
+					// get the related polls (4)
+					polysentApi.randomCategory($scope.single.category).then(function(response) {
+						$scope.related = $scope.related.concat(response.data);
+					});
+				}, function(error){
+					if(error.status === 404) {
+						$location.path('/');
+						return;
+					}
 				});
-			}, function(error){
-				if(error.status === 404) {
-					$location.path('/');
-					return;
-				}
-			});
-
+			} else if($location.path() === '/random'){
+				polysentApi.randomPoll().then(function(response) {
+					$scope.single = response.data[0];
+					// get the related polls (4)
+					polysentApi.randomCategory($scope.single.category).then(function(response) {
+						$scope.related = $scope.related.concat(response.data);
+					});
+				}, function(error){
+					if(error.status === 404) {
+						$location.path('/');
+						return;
+					}
+				});
+			}
+			
 			$scope.vote = function(pollId, index) {
 				/*
 					Create localstorage array if it doesn't
@@ -36675,13 +36741,14 @@ angular.module('filters', []);
 		.factory('polysentApi', ['$http', function($http){
 			var factory = {};
 
-			factory.getPollsByType = function(type, page, perPage){
+			factory.getPollsByType = function(type, page, perPage, order){
 				return $http({
 					method: 'GET',
 					url: '/api/' + type,
 					params: {
 						page: page,
-						per_page: perPage
+						per_page: perPage,
+						order: order ? order : 'desc'
 					}
 				});
 			};
@@ -36722,10 +36789,17 @@ angular.module('filters', []);
 				});
 			};
 
-			factory.random = function(category){
+			factory.randomCategory = function(category){
 				return $http({
 					method: 'GET',
 					url: '/api/random/' + category
+				});
+			};
+
+			factory.randomPoll = function(){
+				return $http({
+					method: 'GET',
+					url: '/api/random'
 				});
 			};
 
@@ -36742,6 +36816,23 @@ angular.module('filters', []);
 			};
 
 			return factory;
+		}]);
+})();
+(function(){
+	'use strict';
+	angular
+		.module('directives')
+		.directive('backgroundColor', [function() {
+			return {
+				restrict: 'A',
+				link: function(scope, element, attrs, Ctrl) {
+					attrs.$observe('backgroundColor', function(value) {
+			            element.css({
+			                'background-color': value
+			            });
+			        });
+				}
+			};
 		}]);
 })();
 (function(){
@@ -36775,6 +36866,23 @@ angular.module('filters', []);
 			}
 		};
 	}]);
+})();
+(function(){
+	'use strict';
+	angular
+		.module('directives')
+		.directive('maxHeight', [function() {
+			return {
+				restrict: 'A',
+				link: function(scope, element, attrs, Ctrl) {
+					attrs.$observe('maxHeight', function(value) {
+			            element.css({
+			                'max-height': value
+			            });
+			        });
+				}
+			};
+		}]);
 })();
 (function(){
 	'use strict';
@@ -36958,4 +37066,11 @@ angular.module('filters', []);
                 return arr.join(' ');
             };
         }]);
+})();
+(function(){
+	 !function(g,s,q,r,d){r=g[r]=g[r]||function(){(r.q=r.q||[]).push(
+		arguments)};d=s.createElement(q);q=s.getElementsByTagName(q)[0];
+		d.src='//d1l6p2sc9645hc.cloudfront.net/tracker.js';q.parentNode.
+		insertBefore(d,q)}(window,document,'script','_gs');
+		_gs('GSN-987922-H');
 })();
