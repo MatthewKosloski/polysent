@@ -1,7 +1,0 @@
-<div>
-	<ul class="poll__bars">
-	    <li ng-repeat="option in options track by $index" style="background-color:rgba(127,101,183,{{getPercentage(option.votes, totalVotes) / 100}});max-height:{{getPercentage(option.votes, totalVotes)}}%;">   
-	        <span ng-bind="option.votes"></span>
-	    </li>
-	</ul>
-</div>
