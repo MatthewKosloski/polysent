@@ -6,7 +6,7 @@
 			</div>
 			<h3 class="poll__title">{{question | clamp:65 }}</h3>
 			<ul class="poll__bars">
-				<li ng-repeat="option in options | limitTo: 7 track by $index" style="background-color:rgba(127,101,183,{{option.alpha}});max-height:{{option.percentage}}%;">
+				<li ng-repeat="option in options | limitTo: 7 track by $index" background-color="rgba(127,101,183,{{option.alpha}})" max-height="{{option.percentage}}%">
 					<span>{{option.votes}}</span>
 				</li>
 			</ul>
