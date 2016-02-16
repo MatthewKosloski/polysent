@@ -42,17 +42,7 @@ var paths = {
       './src/templates/**/*.html'
     ],
     dest: './public/css',
-    ignore: [
-      '.poll-upvoted',
-      '.search-bar--visible',
-      '.hamburger--x',
-      '.mobile-nav--expand',
-      '.globe--contract',
-      '.auxiliary__location--active',
-      '.auxiliary__sorters--visible',
-      '.icon-circle-check',
-      '.icon-circle-cross'
-    ]
+    ignore: []
   },
   minifyCSS: {
     src: './public/css/style.css',
@@ -97,6 +87,8 @@ var paths = {
       './src/js/services/*.js',
       './src/js/directives/*.js',
       './src/js/filters/*.js',
+
+      './src/js/analytics.js'
     ],
     dest: './public/js/'
   }
