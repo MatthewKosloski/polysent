@@ -99,30 +99,6 @@
 			    				controller: 'SingleCtrl'
 			    			}
 			    		} 
-					})
-					.state('adminHome', {
-				    	url: '/admin',
-			    		views: {
-			    			'': {
-			    				templateUrl: './templates/layouts/admin.html'
-			    			},
-			    			'@adminHome': {
-			    				templateUrl: './templates/pages/admin-home.html',
-			    				controller: 'AdminHomeCtrl'
-			    			}
-			    		} 
-					})
-					.state('adminEdit', {
-				    	url: '/admin/edit/:id',
-			    		views: {
-			    			'': {
-			    				templateUrl: './templates/layouts/admin.html'
-			    			},
-			    			'@adminEdit': {
-			    				templateUrl: './templates/pages/admin-edit.html',
-			    				controller: 'AdminEditCtrl'
-			    			}
-			    		} 
 					});
 				$urlRouterProvider.otherwise('/');
 
