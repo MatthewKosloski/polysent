@@ -55,7 +55,6 @@
 			};
 
 			$scope.addPoll = function(){
-				console.log($scope);
 				$scope.loading = true;
 				polysentApi.create($scope.newPoll).then(function(response) {
 				    if(response.status === 200) {
