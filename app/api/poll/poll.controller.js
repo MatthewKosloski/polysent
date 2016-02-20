@@ -96,7 +96,7 @@ exports.randomCategory = function (req, res) {
 exports.featured = function (req, res) {
     var pageNumber = req.query.page, 
         per_page = req.query.per_page ? req.query.per_page : 10;
-    Poll.paginate({featured: true, private: false}, { page: pageNumber, limit: per_page, sort: {totalVotes: 'desc'} }, function(err, result) {
+    Poll.paginate({featured: true, private: false}, { page: pageNumber, limit: per_page, sort: {index: 'desc'} }, function(err, result) {
     if(err) res.status(500).json({message: 'Couldn\'t retrieve the featured polls.'});
         res.status(200).json(result);
     });
