@@ -3,7 +3,7 @@
 
 Contact email: polysentdotcom@gmail.com
 
-##Running locally
+## Running locally
 
 1. Startup Mongo database:
   ```sh
@@ -20,7 +20,7 @@ Contact email: polysentdotcom@gmail.com
     $ gulp
   ```
   
-##Deploying to Digital Ocean
+## Deploying to Digital Ocean
 
 1. SSH into the server via Terminal. (username@PUBLIC_IP_ADDRESS)
 
@@ -50,7 +50,7 @@ Contact email: polysentdotcom@gmail.com
     $ pm2 restart server
   ``` 
 
-  ###In the event of an error after all steps
+### In the event of an error after all steps
   
   If the server errors, do the first 5 steps again.  Then, after the 5th step:
   
