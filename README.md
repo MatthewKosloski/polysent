@@ -26,7 +26,7 @@ Contact email: polysentdotcom@gmail.com
 
 ## Deploying to Digital Ocean
 
-1. SSH into the server via Terminal. (username@polysent.com)
+1. SSH into the server via Terminal. (username [at] polysent [dot] com)
 
 2. Tell NVM to use Node v5.
 
