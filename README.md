@@ -8,13 +8,11 @@ Contact email: polysentdotcom@gmail.com
 
 1. Startup Mongo database:
 
-
 ```sh
   $ mongod
 ```
 
 2. Start the app (in a new tab or window):
-
 
 ```sh
   $ nodemon
@@ -22,17 +20,15 @@ Contact email: polysentdotcom@gmail.com
 
 3. Start gulp (in a new tab or window):
 
-
 ```sh
   $ gulp
 ```
 
 ## Deploying to Digital Ocean
 
-1. SSH into the server via Terminal. (username@PUBLIC_IP_ADDRESS)
+1. SSH into the server via Terminal. (username@polysent.com)
 
 2. Tell NVM to use Node v5.
-
 
 ```sh
   $ nvm use 5.0
@@ -40,13 +36,11 @@ Contact email: polysentdotcom@gmail.com
 
 3. Remove the old directory.
 
-
 ```sh
   $ rm -rf /opt/polysent
 ```
 
 4. Clone this repo into `/opt/polysent`.
-
 
 ```sh
   $ git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent
@@ -54,14 +48,12 @@ Contact email: polysentdotcom@gmail.com
 
 5. Change directory to `/opt/polysent` and install the node modules.
 
-
 ```sh
   $ cd /opt/polysent
   $ npm install
 ```
 
 6. Restart the server.
-
 
 ```sh
   $ pm2 restart server
@@ -73,20 +65,17 @@ If the server errors, do the first 5 steps again. Then, after the 5th step:
 
 1. Show the list of the currently running processes. Under "status" for the server app it should say "errored" in red.
 
-
 ```sh
   $ pm2 list
 ```
 
 2. Delete the server process and refresh the list. (process should be removed and the list empty)
 
-
 ```sh
   $ pm2 delete server
 ```
 
 3. Now to recreate the process, run this:
-
 
 ```sh
   $ NODE_ENV=production PORT=80 pm2 start server.js --watch
