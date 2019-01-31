@@ -11,9 +11,7 @@
 //
 //---------------------------
 
-
-// Import Bower components
 @import
-	"./bower_components/normalize-scss/_normalize.scss",
-	"./bower_components/bourbon/app/assets/stylesheets/bourbon",
+	"./node_modules/normalize-scss/sass/_normalize.scss",
+	"./node_modules/bourbon/app/assets/stylesheets/_bourbon.scss",
 	"feather";

@@ -21,7 +21,7 @@ Contact email: polysentdotcom@gmail.com
 3. Start gulp (in a new tab or window):
 
 ```sh
-  $ gulp
+  $ gulp [dev|build]
 ```
 
 ## Deploying to Digital Ocean
