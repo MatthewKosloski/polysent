@@ -78,9 +78,9 @@ const _moveHTML = function() {
 
 const _minifyHTML = series(_moveHTML, function() {
 	const { html } = paths;
-	return src(paths.html.src)
+	return src(html.src)
     	.pipe(htmlmin({collapseWhitespace: true}))
-    	.pipe(dest(paths.html.dest));
+    	.pipe(dest(html.dest));
 });
 
 const _sassToCSS = function() {
