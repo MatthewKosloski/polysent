@@ -5,30 +5,36 @@ var Poll = require('./poll.model');
  */
 exports.search = function(req, res) {
 	var query = new RegExp(req.query.q, 'i'),
-		pageNumber = req.query.page,
-		per_page = req.query.per_page ? req.query.per_page : 10;
-	Poll.paginate(
-		{
-			$or: [
-				{ question: query },
-				{ category: query },
-				{ 'options.title': query }
-			],
-			private: false
-		},
-		{ page: pageNumber, limit: per_page },
-		function(err, docs) {
-			if (err) {
-				res
-					.status(500)
-					.json({ message: "Couldn't retrieve the search results." });
-			} else if (docs.total === 0) {
-				res.status(404).json({ message: 'No polls were found.' });
-			} else {
-				res.status(200).json(docs);
-			}
+		pageNumber = Number(req.query.page),
+		per_page = Number(req.query.per_page) || 10;
+
+	var query = {
+		$or: [
+			{ question: query },
+			{ category: query },
+			{ 'options.title': query }
+		],
+		private: false
+	};
+
+	var options = { 
+		page: pageNumber, 
+		limit: per_page
+	};
+
+	Poll.paginate(query, options, function(err, docs) {
+		if (err) {
+			res.status(500).json({ 
+				message: "Couldn't retrieve the search results." 
+			});
+		} else if (docs.total === 0) {
+			res.status(404).json({
+				message: 'No polls were found.' 
+			});
+		} else {
+			res.status(200).json(docs);
 		}
-	);
+	});
 };
 
 /**
@@ -38,13 +44,13 @@ exports.single = function(req, res) {
 	var pollId = req.params.id;
 	Poll.find({ _id: pollId }, function(err, docs) {
 		if (err) {
-			res
-				.status(500)
-				.json({ message: 'There was an error getting that poll.' });
+			res.status(500).json({
+				message: 'There was an error getting that poll.' 
+			});
 		} else if (docs.length === 0) {
-			res
-				.status(404)
-				.json({ message: "Sorry, that poll doesn't exist." });
+			res.status(404).json({
+				message: "Sorry, that poll doesn't exist." 
+			});
 		} else {
 			res.status(200).json(docs);
 		}
@@ -55,13 +61,16 @@ exports.single = function(req, res) {
  * PUT request --- upvote a poll
  */
 exports.upvote = function(req, res) {
+
 	var pollId = req.params.id;
-	Poll.findByIdAndUpdate(pollId, { $inc: { upvotes: 1 } }, function(
-		err,
-		docs
-	) {
+
+	var update = { $inc: { upvotes: 1 } };
+
+	Poll.findByIdAndUpdate(pollId, update, function(err, docs) {
 		if (err) {
-			res.status(500).json({ message: "Couldn't upvote the poll." });
+			res.status(500).json({ 
+				message: "Couldn't upvote the poll."
+			});
 		} else {
 			res.sendStatus(200);
 		}
@@ -102,106 +111,135 @@ exports.vote = function(req, res) {
  */
 exports.randomCategory = function(req, res) {
 	var pollCategory = req.params.category;
-	Poll.findRandom(
-		{ category: pollCategory, private: false },
-		{},
-		{ limit: 4 },
-		function(err, docs) {
-			if (err) {
-				res.status(500).json({
-					message: "Couldn't retrieve polls from that category."
-				});
-			} else if (docs.length === 0) {
-				res.status(404).json({
-					message: "Sorry, there aren't any polls with that category."
-				});
-			} else {
-				res.status(200).json(docs);
-			}
+
+	var conditions = { category: pollCategory, private: false };
+	var projection = {};
+	var options = { limit: 4 };
+
+	Poll.findRandom(conditions, projection, options, function(err, docs) {
+		if (err) {
+			res.status(500).json({
+				message: "Couldn't retrieve polls from that category."
+			});
+		} else if (docs.length === 0) {
+			res.status(404).json({
+				message: "Sorry, there aren't any polls with that category."
+			});
+		} else {
+			res.status(200).json(docs);
 		}
-	);
+	});
 };
 
 /**
  * GET request --- get the featured polls
  */
 exports.featured = function(req, res) {
-	var pageNumber = req.query.page,
-		per_page = req.query.per_page ? req.query.per_page : 10;
-	Poll.paginate(
-		{ featured: true, private: false },
-		{ page: pageNumber, limit: per_page, sort: { index: 'desc' } },
-		function(err, result) {
-			if (err)
-				res
-					.status(500)
-					.json({ message: "Couldn't retrieve the featured polls." });
-			res.status(200).json(result);
+	var pageNumber = Number(req.query.page),
+		per_page = Number(req.query.per_page) || 10;
+
+	var query = { 
+		featured: true, 
+		private: false 
+	};
+
+	var options = { 
+		page: pageNumber, 
+		limit: per_page, 
+		sort: { index: 'desc' } 
+	};
+
+	Poll.paginate(query, options, function(err, result) {
+		if (err) {
+			res.status(500).json({ 
+				message: "Couldn't retrieve the featured polls." 
+			});
 		}
-	);
+		res.status(200).json(result);
+	});
 };
 
 exports.newest = function(req, res) {
-	var pageNumber = req.query.page,
-		per_page = req.query.per_page ? req.query.per_page : 10,
-		order = req.query.order ? req.query.order : 'desc';
-	Poll.paginate(
-		{ private: false },
-		{ page: pageNumber, limit: per_page, sort: { index: order } },
-		function(err, result) {
-			if (err)
-				res
-					.status(500)
-					.json({ message: "Couldn't retrieve the newest polls." });
-			res.status(200).json(result);
+	var pageNumber = Number(req.query.page),
+		per_page = Number(req.query.per_page) || 10,
+		order = req.query.order || 'desc';
+
+	var query = { private: false };
+	var options = {
+		page: pageNumber, 
+		limit: per_page, 
+		sort: { index: order } 
+	};
+
+	Poll.paginate(query, options, function(err, result) {
+		if (err) {
+			res.status(500).json({
+				message: "Couldn't retrieve the newest polls." 
+			});
 		}
-	);
+		res.status(200).json(result);
+	});
 };
 
 exports.mostVotes = function(req, res) {
-	var pageNumber = req.query.page,
-		per_page = req.query.per_page ? req.query.per_page : 10,
-		order = req.query.order ? req.query.order : 'desc';
-	Poll.paginate(
-		{ private: false },
-		{ page: pageNumber, limit: per_page, sort: { totalVotes: order } },
-		function(err, result) {
-			if (err)
-				res.status(500).json({
-					message: "Couldn't retrieve the polls with the most votes."
-				});
-			res.status(200).json(result);
-		}
-	);
+	var pageNumber = Number(req.query.page),
+		per_page = Number(req.query.per_page) || 10,
+		order = req.query.order || 'desc';
+	
+	var query = { private: false };
+	var options = { 
+		page: pageNumber, 
+		limit: per_page, 
+		sort: { totalVotes: order }
+	};
+
+	Poll.paginate(query, options, function(err, result) {
+		if (err)
+			res.status(500).json({
+				message: "Couldn't retrieve the polls with the most votes."
+			});
+		res.status(200).json(result);
+	});
 };
 
 /**
  * GET request --- get the top rated posts (most upvotes)
  */
 exports.topRated = function(req, res) {
-	var pageNumber = req.query.page,
-		per_page = req.query.per_page ? req.query.per_page : 10,
+	var pageNumber = Number(req.query.page),
+		per_page = Number(req.query.per_page) || 10,
 		order = req.query.order ? req.query.order : 'desc';
-	Poll.paginate(
-		{ private: false },
-		{ page: pageNumber, limit: per_page, sort: { upvotes: order } },
-		function(err, result) {
-			if (err)
-				res.status(500).json({
-					message: "Couldn't retrieve the top rated polls."
-				});
-			res.status(200).json(result);
-		}
-	);
+
+	var query = { private: false };
+	var options = { 
+		page: pageNumber, 
+		limit: per_page, 
+		sort: { upvotes: order }
+	};
+
+	Poll.paginate(query, options, function(err, result) {
+		if (err)
+			res.status(500).json({
+				message: "Couldn't retrieve the top rated polls."
+			});
+		res.status(200).json(result);
+	});
 };
 
 /**
  * GET request --- get a random poll
  */
 exports.randomPoll = function(req, res) {
-	Poll.findRandom({ private: false }, {}, { limit: 1 }, function(err, docs) {
+
+	var conditions = { private: false };
+	var projection = {};
+	var options = { limit: 1};
+
+	Poll.findRandom(conditions, projection, options, function(err, docs) {
 		if (err) {
-			res.status(500).json({ message: "Couldn't retrieve a poll." });
+			res.status(500).json({ 
+				message: "Couldn't retrieve a poll."
+			});
 		} else {
 			res.status(200).json(docs);
 		}
@@ -212,13 +250,16 @@ exports.randomPoll = function(req, res) {
  * POST request --- post a new poll
  */
 exports.create = function(req, res) {
+
 	var newPoll = new Poll(req.body);
 	newPoll.category = req.body.category.label;
+
 	newPoll.save(function(err, docs) {
-		if (err)
-			res
-				.status(500)
-				.json({ message: 'An error occurred while saving the poll.' });
+		if (err) {
+			res.status(500).json({ 
+				message: 'An error occurred while saving the poll.'
+			});
+		}
 		res.status(200).json(docs);
 	});
 };
