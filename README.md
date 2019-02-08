@@ -24,61 +24,123 @@ Contact email: polysentdotcom@gmail.com
   $ gulp [dev|build]
 ```
 
-## Deploying to Digital Ocean
+# Docker
 
-1. SSH into the server via Terminal. (username [at] polysent [dot] com)
+The web application is served from within a Docker container on a Digital Ocean VPS droplet running Ubuntu 18.04.
 
-2. Tell NVM to use Node v5.
+## Steps to Build The Image and Push to DockerHub
 
-```sh
-  $ nvm use 5.0
+### 1. Building the Image
+
+To build an image for Polysent, type the following command from within the root directory:
+
+```
+  $ docker build -t matthewkosloski/polysent .
 ```
 
-3. Remove the old directory.
+### 2. Pushing the Image
 
-```sh
-  $ rm -rf /opt/polysent
+Push the image to [DockerHub](https://hub.docker.com/u/matthewkosloski):
+
+```
+  $ docker push matthewkosloski/polysent
 ```
 
-4. Clone this repo into `/opt/polysent`.
+## Steps to Start up a Container Using A Previously Built Image
 
-```sh
-  $ git clone https://github.com/MatthewKosloski/polysent.git /opt/polysent
+### 3. Log in to VPS server
+
+```
+  $ ssh matt@polysent.com
 ```
 
-5. Change directory to `/opt/polysent` and install the node modules.
+### 4. Pull the latest Image of Polysent
 
-```sh
-  $ cd /opt/polysent
-  $ npm install
+```
+  $ sudo docker pull matthewkosloski/polysent
 ```
 
-6. Restart the server.
+You can optionally delete the older images of Polysent with the `prune` command:
 
-```sh
-  $ pm2 restart server
+```
+  $ sudo docker system prune
 ```
 
-## In the event of an error after all steps
+### 5. Create a New Container
 
-If the server errors, do the first 5 steps again. Then, after the 5th step:
+Create a new container for the Polysent web app.
 
-1. Show the list of the currently running processes. Under "status" for the server app it should say "errored" in red.
+Explanation of the command:
 
-```sh
-  $ pm2 list
+- `--network="host"`: Allows us to connect to the Mongo database running on the host (the VPS server).  Now, `localhost` in the app refers to the host (e.g., 'mongodb://localhost:27017/polysent').
+- `--name=polysent_container`: By default, Docker generates a random name for the container.  This provides the container with the name of `polysent_container`.  This is helpful when we want to stop the container.
+- `--rm`: This means that when we stop the container using `sudo docker stop polysent_container`, the container will automatically be deleted.  To confirm this, simply run `sudo docker ps -a`.
+- `-d`: This means that we want the container to run in the background.  In other words, we do not want to be inside of the shell of the container after we run it.
+- `matthewkosloski/polysent`: This is the name of the image.
+
+```
+  $ sudo docker run --network="host" --name=polysent_container --rm -d matthewkosloski/polysent
 ```
 
-2. Delete the server process and refresh the list. (process should be removed and the list empty)
+## Steps to Run a New Container with an Updated Image
 
-```sh
-  $ pm2 delete server
+When there is an updated image for Polysent, we would like to create a new container with it.
+
+### 1. Stop and Remove the Old Container
+
+Use the following command to stop the old container (This assumes the name of the old container is `polysent_container`):
+
+```
+  $ sudo docker stop polysent_container
 ```
 
-3. Now to recreate the process, run this:
+If the old container was ran using the `--rm` flag, it should have been deleted after running the above command.  To confirm, simply run:
 
-```sh
-  $ NODE_ENV=production PORT=80 pm2 start server.js --watch
+```
+  $ sudo docker ps -a
 ```
 
-4. Run the `pm2 list` command at least two times to check for fatal errors.
+### 2. Pull the New Image
+
+Download the latest version of the Polysent image from DockerHub:
+
+```
+  $ sudo pull matthewkosloski/polysent
+```
+
+### 3. Run the Container
+
+```
+  $ sudo docker run --network="host" --name=polysent_container --rm -d matthewkosloski/polysent
+```
+
+# Steps to Deploy on a new Digital Ocean Droplet
+
+If we need to create a new droplet for Polysent, follow the below steps to set up a new droplet.
+
+## 1. Create the Droplet from the Digital Ocean Dashboard
+
+We first want to create a droplet running Ubuntu.  Log in to Digital Ocean and create a new droplet, preferable the lowest tier running from New York.  Make sure to include your computer's SSH key to the droplet.
+
+## 2. Perform Initial Server Setup
+
+Follow the steps in [this](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04) blog post to perform initial server setup.  This includes created a non-root sudo user and setting up the `ufw` firewall.
+
+## 3. Install Docker
+
+Follow the beginning part of [this](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) blog post to install Docker on Ubuntu.
+
+## 4. Install MongoDB
+
+Follow the steps in [this](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-18-04) blog post to install MongoDB.
+
+## 5. Pull the Polysent Image from DockerHub.
+
+```
+  $ sudo docker pull matthewkosloski/polysent
+```
+
+## 6. Start a Container
+
+Follow the above steps to start a container.
+
