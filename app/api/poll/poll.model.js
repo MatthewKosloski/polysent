@@ -2,10 +2,12 @@ var mongoose = require('mongoose'),
 	autoIncrement = require('mongoose-auto-increment'),
 	mongoosePaginate = require('mongoose-paginate'),
 	random = require('mongoose-simple-random'),
-	ShortId = require('mongoose-minid');
+	generate = require('nanoid/generate');
+
+const alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 var PollSchema = new mongoose.Schema({
-	_id: { type: ShortId, len: 5 },
+	_id: { type: String, default: generate.bind(null, alphabet, 5) },
 	index: { type: Number },
 	submittedBy: { type: String },
 	question: { type: String, required: true },
