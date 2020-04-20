@@ -16,7 +16,7 @@
     "ejs": "~2.5.7",
     "express": "^4.16.4",
     "i": "^0.3.3",
-    "mongoose": "^4.3.4",
+    "mongoose": "^5.7.5",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-minid": "^1.1.1",
     "mongoose-paginate": "^5.0.0",
