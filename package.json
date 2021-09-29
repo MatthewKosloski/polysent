@@ -15,7 +15,7 @@
     "debug": "^4.1.1",
     "ejs": "~2.5.7",
     "express": "^4.16.4",
-    "i": "^0.3.3",
+    "i": "^0.3.7",
     "mongoose": "^4.3.4",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-minid": "^1.1.1",
