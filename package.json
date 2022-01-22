@@ -22,7 +22,7 @@
     "mongoose-paginate": "^5.0.0",
     "mongoose-simple-random": "^0.3.3",
     "morgan": "^1.9.1",
-    "nanoid": "^2.0.1",
+    "nanoid": "^3.1.31",
     "normalize-scss": "^7.0.1",
     "serve-favicon": "^2.5.0"
   },
