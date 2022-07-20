@@ -6,7 +6,7 @@
     "start": "node server"
   },
   "dependencies": {
-    "angular": "^1.4.8",
+    "angular": "^1.8.3",
     "angular-local-storage": "^0.7.1",
     "angular-ui-router": "^1.0.20",
     "body-parser": "^1.18.3",
